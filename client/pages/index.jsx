@@ -1,10 +1,22 @@
 import HomePage from '@template/HomePage'
 import Default from '@layout/Default'
+import axios from '@util/axios'
 
-const App = () => (
-    <Default>
-        <HomePage />
-    </Default>
-)
+export default function App (props) {
+    
+    return (
+        <Default>
+            <HomePage data={props}/>
+        </Default>
+    )
+}
 
-export default App
+export async function getStaticProps () {
+
+    const homePage = await axios('/home-page')
+    return {
+        props: {
+            mainMessage: homePage.data.mainMessage,
+        }
+    }
+}

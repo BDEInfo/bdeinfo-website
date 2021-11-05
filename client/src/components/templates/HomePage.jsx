@@ -1,9 +1,11 @@
+import axios from '@util/axios'
+
 import styles from './HomePage.module.sass'
 
-const HomePage = () => (
+export default function HomePage ({ data }) {
 
-    <div>Hello World</div>
+    return (<>
+        { data.mainMessage }
+    </>)
 
-)
-
-export default HomePage
+}
