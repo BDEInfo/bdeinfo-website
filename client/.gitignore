@@ -4,6 +4,7 @@ package-lock.json
 
 # testing
 /coverage
+/tests
 
 # next.js
 /.next/

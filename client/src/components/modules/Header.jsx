@@ -1,8 +1,9 @@
 
-const Header = () => (
-    <div>
-        World Hello !
-    </div>
-)
+export default function Header () {
 
-export default Header
+    return (
+        <div>
+            
+        </div>
+    )
+}
