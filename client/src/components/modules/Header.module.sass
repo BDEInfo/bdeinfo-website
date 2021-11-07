@@ -1,0 +1,25 @@
+.navbar
+    user-select: none
+    position: fixed
+    top: 0
+    width: 100vw
+    height: 12vh
+    padding: 1.5rem 2rem
+    display: flex
+    flex-direction: row
+    justify-content: flex-end
+    align-items: center
+
+    .tabs
+        display: flex
+
+        .tab
+            cursor: pointer
+            margin: 1rem
+            font-size: 1.3rem
+            font-weight: 900
+            color: var(--primary-color)
+            transition: color 0.2s linear
+
+            &:hover
+                color: var(--secondary-color)

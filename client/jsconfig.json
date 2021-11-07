@@ -7,8 +7,9 @@
             "@module/*": ["components/modules/*"],
             "@template/*": ["components/templates/*"],
             "@context/*": ["context/*"],
+            "@hook/*": ["hooks/*"],
             "@util/*": ["utils/*"],
-            "@api/*": ["api/*"]
+            "@style/*": ["../public/styles/*"]
         }
     },
     "exclude": ["node_modules"]
