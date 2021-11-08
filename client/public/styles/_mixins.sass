@@ -1,0 +1,13 @@
+@mixin glassCard($opacity: 0.15, $color: rgb(63, 63, 63))
+    background: rgba($color, $opacity)
+    box-shadow: 0 8px 32px 0 rgba(15, 15, 15, 0.37)
+    backdrop-filter: blur( 5.5px )
+    -webkit-backdrop-filter: blur( 5.5px )
+    border-radius: 10px
+    border: 1px solid rgba(0, 0, 0, 0.18)
+
+@mixin card
+    background: #222222
+
+    border-radius: 10px
+    border: 1ps solid rgba(black, 0.18)

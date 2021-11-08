@@ -1,14 +1,19 @@
+@use '_variables' as *
+    
+// NAVBAR
+    
 .navbar
     user-select: none
     position: fixed
     top: 0
     width: 100vw
-    height: 12vh
+    height: $navbarHeight
     padding: 1.5rem 2rem
     display: flex
     flex-direction: row
     justify-content: flex-end
     align-items: center
+    z-index: 5
 
     .tabs
         display: flex
@@ -18,8 +23,30 @@
             margin: 1rem
             font-size: 1.3rem
             font-weight: 900
-            color: var(--primary-color)
+            color: $primaryColor
             transition: color 0.2s linear
 
             &:hover
-                color: var(--secondary-color)
+                color: $secondaryColor
+
+
+// LINKS
+
+.links
+    position: fixed
+    display: flex
+    flex-direction: column
+    top: 50%
+    right: 1%
+    transform: translateY(-50%)
+    z-index: 5
+
+    .link
+        cursor: pointer
+        margin: 1rem
+        font-size: 1.6rem
+        color: $primaryColor
+        transition: color 0.2s linear
+
+        &:hover
+            color: $secondaryColor

@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import useInterval from '@hook/useInterval'
 import styles from './HomePage.module.sass'
-import dateformat from 'dateformat'
+import apiURL from '@config/connection'
+import formatDate from '@util/formatDate'
 
 export default function HomePage ({ data }) {
 
-    const [radioChecked, setRadioChecked] = useState(1)
+    const [radioChecked, setRadioChecked] = useState(3)
 
     useInterval(() => {
 
@@ -35,7 +36,7 @@ export default function HomePage ({ data }) {
             <div className={styles.events}>
                 {data.events.map((event, i) => 
                     <label className={styles.event} htmlFor={`item-${i+1}`} id={styles[`event-${i+1}`]} key={event.id}>
-                        <img className={styles.eventImg} src={`${process.env.BASE_URL}${event.image.url}`}/>
+                        <img className={styles.eventImg} src={`${apiURL}${event.image?.url || defaultEventImageURL}`}/>
                     </label>
                 )}
             </div>
@@ -59,19 +60,6 @@ export default function HomePage ({ data }) {
 
         </div>
 
-        <div className={styles.links}>
-            <i className={`${styles.link} circleHover fab fa-instagram`}></i>
-            <i className={`${styles.link} circleHover fab fa-facebook`}></i>
-            <i className={`${styles.link} circleHover fas fa-link`}></i>
-        </div>
-
-        <div id="cursorCircle"></div>
-
     </>)
 
-}
-
-function formatDate (date) {
-
-    return dateformat(new Date(date), 'dd/mm à HH:MM')
 }

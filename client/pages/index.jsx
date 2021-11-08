@@ -1,7 +1,6 @@
 import HomePage from '@template/HomePage'
 import Default from '@layout/Default'
 import axios from '@util/axios'
-import Script from 'next/script'
 
 export default function App (props) {
     
@@ -9,16 +8,6 @@ export default function App (props) {
         <Default>
             <HomePage data={props}/>
         </Default>
-
-        <Script 
-            src="/scripts/circleCursor.js"
-            strategy="afterInteractive"
-        />
-        <Script 
-            src="https://kit.fontawesome.com/d055a26e11.js"
-            strategy="beforeInteractive"
-            crossOrigin="anonymous"
-        />
     </>)
 }
 
@@ -33,6 +22,7 @@ export async function getStaticProps () {
             location: homePage.data.location,
             description: homePage.data.description,
             carouselDelayInSeconds: homePage.data.carouselDelayInSeconds,
+            defaultEventImageURL: homePage.data.defaultEventImage.url,
             events: events.data
         },
         

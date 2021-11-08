@@ -1,3 +1,7 @@
+@use '_variables' as *
+@use '_mixins' as *
+@use 'sass:color'
+    
 .mainText
     user-select: none
     position: absolute
@@ -19,47 +23,25 @@
                 transform: translateY(0)
 
         span
-            color: var(--secondary-color)
+            color: $secondaryColor
             animation: neon 1.5s ease-in-out infinite alternate
 
             @keyframes neon
                 from
-                    text-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color)
+                    text-shadow: 0 0 10px $secondaryColor, 0 0 20px $secondaryColor
                 to
-                    text-shadow: 0 0 5px var(--secondary-color), 0 0 10px var(--secondary-color)
+                    text-shadow: 0 0 5px $secondaryColor, 0 0 10px $secondaryColor
 
     .preTitle
-        color: rgba(255, 255, 255, 0.7)
+        color: color.adjust($primaryColor, $alpha: -0.1)
 
     .postTitle
         font-family: 'Poppins'
         font-weight: lighter
         letter-spacing: 0.15rem
-        color: rgba(255, 255, 255, 0.7)
-
-// LINKS
-
-.links
-    position: absolute
-    display: flex
-    flex-direction: column
-    top: 50%
-    right: 0
-    transform: translateY(-50%)
-
-    .link
-        cursor: pointer
-        margin: 1rem
-        font-size: 1.6rem
-        color: var(--primary-color)
-        transition: color 0.2s linear
-
-        &:hover
-            color: var(--secondary-color)
+        color: color.adjust($primaryColor, $alpha: -0.1)
 
 // CAROUSEL
-
-@import url("https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap")
 
 .eventsContainer
     user-select: none
@@ -105,12 +87,7 @@
                 object-fit: cover
 
     .info
-        background: rgba(63, 63, 63, 0.15)
-        box-shadow: 0 8px 32px 0 rgba(15, 15, 15, 0.37)
-        backdrop-filter: blur( 5.5px )
-        -webkit-backdrop-filter: blur( 5.5px )
-        border-radius: 10px
-        border: 1px solid rgba(0, 0, 0, 0.18)
+        @include card
         min-width: 320px
         padding: 16px 10px
 
@@ -134,7 +111,7 @@
                     display: block
 
                     .title
-                        color: var(--secondary-color)
+                        color: $secondaryColor
                         font-size: 14px
                         line-height: 24px
     
@@ -149,12 +126,12 @@
                             color: #c6c5c6       
 
 #radio-1:checked ~ .events #event-3, #radio-2:checked ~ .events #event-1, #radio-3:checked ~ .events #event-2
-    transform: translatex(-40%) scale(.8)
+    transform: translatex(-25%) scale(.8)
     opacity: .4
     z-index: 0
 
 #radio-1:checked ~ .events #event-2, #radio-2:checked ~ .events #event-3, #radio-3:checked ~ .events #event-1
-    transform: translatex(40%) scale(.8)
+    transform: translatex(25%) scale(.8)
     opacity: .4
     z-index: 0
 
@@ -162,9 +139,6 @@
     transform: translatex(0) scale(1)
     opacity: 1
     z-index: 1
-
-    img
-        box-shadow: 0px 0px 5px 0px rgba(81, 81, 81, 0.47)
 
 #radio-1:checked ~ .info #text
     transform: translateY(0)
