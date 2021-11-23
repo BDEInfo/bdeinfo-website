@@ -4,9 +4,10 @@ import styles from './HomePage.module.sass'
 import apiURL from '@config/connection'
 import formatDate from '@util/formatDate'
 
+
 export default function HomePage ({ data }) {
 
-    const [radioChecked, setRadioChecked] = useState(3)
+    const [radioChecked, setRadioChecked] = useState(1)
 
     useInterval(() => {
 
@@ -59,7 +60,6 @@ export default function HomePage ({ data }) {
             </div>
 
         </div>
-
     </>)
 
 }

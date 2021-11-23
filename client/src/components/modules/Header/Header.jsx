@@ -1,22 +1,19 @@
+import Link from 'next/link'
 import styles from './Header.module.sass'
 
-const tabs = [
-    { displayedName: 'Accueil' },
-    { displayedName: 'À propos' },
-    { displayedName: 'Events' },
-    { displayedName: 'Utilitaires' },
-    { displayedName: 'Contact' },
-]
+import { tabs } from '@config/navbar'
 
 export default function Header () {
 
     return (<>
         <nav className={styles.navbar}>
-            <ul className={styles.tabs}>
-                {tabs.map(tab =>
-                    <li className={`${styles.tab} circleHover`} key={tab.displayedName}>{tab.displayedName}</li>
+            <div className={styles.tabs}>
+                {tabs.map(tab => 
+                    <Link href={tab.route} key={tab.displayName}>
+                        <a className={`${styles.tab} circleHover`}>{tab.displayName}</a>
+                    </Link>
                 )}
-            </ul>
+            </div>
         </nav>
 
         <div className={styles.links}>

@@ -1,0 +1,78 @@
+@use '_variables' as *
+@use '_mixins' as *
+@use 'sass:color'
+
+$eventRadius: 10px
+    
+.event
+    @include card
+    overflow: hidden
+
+    width: 40%
+    height: 30vh
+    margin: 2rem
+
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+    border-radius: $eventRadius
+
+    transform: scale(1)
+    transition: 0.3s linear
+
+    &:hover
+        transform: scale(1.05)
+        background: rgba($secondaryColor, 0.1)
+
+    &:hover .descriptionContainer
+        -ms-overflow-style: auto
+        scrollbar-width: 10px
+
+        &::-webkit-scrollbar
+            display: block
+
+    .image
+        margin-left: 1rem
+        margin-right: 2rem
+        height: 90%
+        object-fit: cover
+        border-radius: $eventRadius
+
+    .infos
+        height: 100%
+        display: flex
+        flex-direction: column
+        justify-content: center
+
+        .title
+            color: $secondaryColor
+
+        .date
+            color: $primaryColor
+
+        .price
+            margin-top: 0.5rem
+            font-family: 'Arimo', sans-serif
+            font-weight: bold
+            color: color.adjust($primaryColor, $alpha: -0.2)
+            margin-bottom: 1rem
+            
+            span
+                color: color.adjust($primaryColor, $alpha: -0.4)
+
+        .descriptionContainer
+            height: 50%
+            overflow-y: scroll
+
+            -ms-overflow-style: none
+            scrollbar-width: none
+
+            &::-webkit-scrollbar
+                display: none
+            
+
+            .description
+
+                height: 70%
+                font-family: 'Arimo', sans-serif

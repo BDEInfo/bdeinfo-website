@@ -1,5 +1,5 @@
 import styles from './Default.module.sass'
-import Header from '@module/Header'
+import Header from '@module/Header/Header'
 import Script from 'next/script'
 
 export default function Default ({children}) {
@@ -14,14 +14,6 @@ export default function Default ({children}) {
 
         <div id="cursorCircle"></div>
 
-        <Script 
-            src="/scripts/circleCursor.js"
-            strategy="afterInteractive"
-        />
-        <Script 
-            src="https://kit.fontawesome.com/d055a26e11.js"
-            strategy="beforeInteractive"
-            crossOrigin="anonymous"
-        />
+        <Script src="/scripts/circleCursor.js" strategy="beforeInteractive" />
     </>)
 }

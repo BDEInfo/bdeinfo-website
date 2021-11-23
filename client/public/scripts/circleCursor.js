@@ -6,7 +6,13 @@ let mousePosX = 0,
     mousePosY = 0,
     mouseCircle = document.getElementById('cursorCircle');
 
+document.addEventListener('popstate', (e) => {
+    mouseCircle = document.getElementById('cursorCirle')
+})
+
 document.onmousemove = (e) => {
+
+    console.log(mouseCircle)
 
     elementMouseIsOver = document.elementFromPoint(e.pageX, e.pageY);
 
@@ -28,6 +34,7 @@ let delay = 6,
     revisedMousePosY = 0;
 
 function delayMouseFollow() {
+
     requestAnimationFrame(delayMouseFollow);
 
     revisedMousePosX += (mousePosX - revisedMousePosX) / delay;
