@@ -1,7 +1,8 @@
 import axios from 'axios'
+import baseURL from '@config/connection'
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8082',
+    baseURL,
     headers: {
         'Authorization': `Bearer ${process.env.ADMIN_JWT_SECRET}`
     }

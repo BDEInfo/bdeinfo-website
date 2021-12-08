@@ -1,0 +1,27 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_pages",
+  "info": {
+    "name": "HomePage",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "location": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "carouselDelayInSeconds": {
+      "type": "integer",
+      "required": false,
+      "default": 5
+    }
+  }
+}

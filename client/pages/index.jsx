@@ -4,19 +4,27 @@ import axios from '@util/axios'
 
 export default function App (props) {
     
-    return (
+    return (<>
         <Default>
             <HomePage data={props}/>
         </Default>
-    )
+    </>)
 }
 
 export async function getStaticProps () {
 
-    const homePage = await axios('/home-page')
+    const [homePage, events] = await Promise.all([
+        axios('/home-page'),
+        axios('/events?_sort=startDate:DESC&_limit=3')
+    ])
     return {
         props: {
-            mainMessage: homePage.data.mainMessage,
-        }
+            location: homePage.data.location,
+            description: homePage.data.description,
+            carouselDelayInSeconds: homePage.data.carouselDelayInSeconds,
+            defaultEventImageURL: homePage.data.defaultEventImage.url,
+            events: events.data
+        },
+        
     }
 }
