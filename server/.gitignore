@@ -65,7 +65,7 @@ $RECYCLE.BIN/
 # Logs and databases
 ############################
 
-.tmp
+*.db
 *.log
 *.sql
 *.sqlite
@@ -112,3 +112,9 @@ exports
 *.cache
 build
 .strapi-updater.json
+
+############################
+# Other
+############################
+
+pm2.config.json

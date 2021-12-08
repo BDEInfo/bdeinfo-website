@@ -1,0 +1,66 @@
+{
+  "kind": "collectionType",
+  "collectionName": "events",
+  "info": {
+    "singularName": "event",
+    "pluralName": "events",
+    "displayName": "Event",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "startDate": {
+      "type": "datetime"
+    },
+    "endDate": {
+      "type": "datetime"
+    },
+    "distanciel": {
+      "type": "boolean",
+      "default": false
+    },
+    "prixAdh": {
+      "type": "decimal",
+      "default": 0,
+      "min": 0
+    },
+    "prixNAdh": {
+      "type": "decimal",
+      "default": 0,
+      "min": 0
+    },
+    "tags": {
+      "type": "enumeration",
+      "enum": [
+        "integration",
+        "soiree",
+        "concours",
+        "tournois",
+        "culture",
+        "event",
+        "afterwork"
+      ]
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "location": {
+      "type": "string"
+    }
+  }
+}

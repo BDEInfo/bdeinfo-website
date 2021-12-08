@@ -1,0 +1,50 @@
+{
+  "kind": "singleType",
+  "collectionName": "bde_informations",
+  "info": {
+    "singularName": "bde-information",
+    "pluralName": "bde-informations",
+    "displayName": "BDE Informations"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "description": {
+      "type": "richtext",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "default": "contact@bdeinfo.org",
+      "required": false
+    },
+    "phone": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string",
+      "default": "45.785981, 4.883337",
+      "required": false
+    },
+    "statuts": {
+      "allowedTypes": [
+        "files"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "mandat": {
+      "type": "string",
+      "required": false
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bde_members",
+  "info": {
+    "singularName": "bde-member",
+    "pluralName": "bde-members",
+    "displayName": "BDE Member"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "role": {
+      "type": "string",
+      "default": "Membre du bureau"
+    },
+    "picture": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
