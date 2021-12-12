@@ -1,12 +1,13 @@
 import HomePage from '@template/HomePage'
 import Default from '@layout/Default'
 import axios from '@util/axios'
+import formatJSONResponse from '@util/formatJSONResponse'
 
-export default function App (props) {
+export default function App ({ homePage, events }) {
     
     return (<>
         <Default>
-            <HomePage data={props}/>
+            <HomePage homePage={homePage} events={events}/>
         </Default>
     </>)
 }
@@ -15,16 +16,18 @@ export async function getStaticProps () {
 
     const [homePage, events] = await Promise.all([
         axios('/home-page'),
-        axios('/events?_sort=startDate:DESC&_limit=3')
+        axios('/events', {
+            params: {
+                'sort': 'startDate:DESC',
+                'pagination[limit]': 3 
+            }
+        })
     ])
+
     return {
         props: {
-            location: homePage.data.location,
-            description: homePage.data.description,
-            carouselDelayInSeconds: homePage.data.carouselDelayInSeconds,
-            defaultEventImageURL: homePage.data.defaultEventImage.url,
-            events: events.data
-        },
-        
+            homePage: formatJSONResponse(homePage.data),
+            events: formatJSONResponse(events.data)
+        }
     }
 }

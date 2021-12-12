@@ -1,0 +1,116 @@
+@use '_variables' as *
+@use 'sass:color'
+    
+.aboutContainer
+
+    position: absolute
+    left: 45%
+    transform: translateX(-50%)
+    display: flex
+    align-items: center
+    justify-content: space-around
+    height: 100vh
+    width: 75vw
+    text-align: center
+
+    .tilt
+
+        display: flex
+        align-items: center
+        justify-content: center
+        width: 100vh
+        height: 60vh
+        box-shadow: 0 20px 27px rgba(0, 0, 0, 0.05)
+        transform-style: preserve-3d
+
+        margin:
+            // left: -10rem
+            top: 3rem 
+        
+        &:hover 
+            .image
+                opacity: 0.05
+            .informations
+                opacity: 1
+
+        .informations
+
+            position: absolute
+            top: 0
+            height: 100%
+
+            display: flex
+            flex-direction: column
+            align-items: center
+            justify-content: center
+
+            opacity: 0
+
+            transition: .2s linear
+
+            .title 
+                font-size: 2rem
+
+            .description
+
+                margin-top: 1rem
+
+                font-family: "Poppins", sans-serif
+                font-weight: 500
+                color: color.adjust($primaryColor, $alpha: -0.1)
+
+            .subInformations
+
+                display: flex
+                justify-content: center
+                align-items: center
+
+                margin-top: 1rem
+
+                div 
+
+                    margin: .8rem
+                    color: color.adjust($secondaryColor, $whiteness: 50%)
+
+
+        .mandat 
+            
+            position: absolute
+            top: -8%
+            left: 5%
+
+            color: #e4e9efa2
+            font-size: 1.5rem
+
+        .image 
+
+            height: 60vh
+            border-radius: 5px
+
+            opacity: 0.9
+
+            transition: .2s linear
+
+    .interactions
+
+
+        div
+            margin: 2rem 0rem
+            padding: 1.5rem
+
+            font-size: 1.2rem
+            font-family: 'Poppins'
+
+            background: color.adjust($backgroundColor, $whiteness: 2%)
+            border-radius: 10px
+
+            cursor: pointer
+            transition: .3s linear
+
+            &:hover 
+                background: color.adjust($secondaryColor, $alpha: -.4)
+
+            i
+                margin-left: 1rem
+
+    

@@ -2,12 +2,13 @@ import Events from '@template/Events'
 import Default from '@layout/Default'
 
 import axios from '@util/axios'
+import formatJSONResponse from '@util/formatJSONResponse'
 
 export default function App ({ events, defaultEventImage }) {
 
     return (<>
         <Default>
-            <Events events={events} defaultEventImageURL={defaultEventImage.url}/>
+            <Events events={events} defaultEventImage={defaultEventImage}/>
         </Default>
     </>)
 }
@@ -16,13 +17,17 @@ export async function getStaticProps () {
 
     const [homePage, events] = await Promise.all([
         axios('/home-page'),
-        axios('/events?_sort=startDate:DESC')
+        axios('/events', {
+            params: {
+                'sort': 'startDate:DESC'
+            }
+        })
     ])
 
     return {
         props: {
-            defaultEventImage: homePage.data.defaultEventImage,
-            events: events.data
+            defaultEventImage: formatJSONResponse(homePage.data.data.attributes.defaultEventImage),
+            events: formatJSONResponse(events.data)
         }
     }
 }

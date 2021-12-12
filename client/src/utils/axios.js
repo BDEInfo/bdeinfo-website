@@ -1,10 +1,13 @@
-import axios from 'axios'
+import Axios from 'axios'
 import baseURL from '@config/connection'
 
-const instance = axios.create({
-    baseURL,
+const instance = Axios.create({
+    baseURL: baseURL + '/api',
     headers: {
-        'Authorization': `Bearer ${process.env.ADMIN_JWT_SECRET}`
+        'Authorization': `Bearer ${process.env.ADMIN_API_TOKEN}`
+    },
+    params: {
+        populate: '*'
     }
 })
 

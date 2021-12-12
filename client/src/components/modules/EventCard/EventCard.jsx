@@ -1,14 +1,14 @@
 import styles from './EventCard.module.sass'
-import apiURL from '@config/connection'
 
 import formatDate from '@util/formatDate'
 import { escapeNewLine } from '@util/formatText'
+import getImage from '@util/getImage'
 
-export default function EventCard ({ event }) {
+export default function EventCard ({ event, defaultEventImage }) {
 
     return (
-        <div className={styles.event} key={event.id}>
-            <img className={styles.image} src={`${apiURL}${event.image?.url || defaultEventImageURL}`}/>
+        <div key={event.id} className={styles.event} key={event.id}>
+            <img className={styles.image} src={getImage(event.image, 'small', defaultEventImage)}/>
             <div className={styles.infos}>
                 <h2 className={styles.title}>
                     {event.title}

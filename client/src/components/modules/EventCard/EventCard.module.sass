@@ -22,15 +22,8 @@ $eventRadius: 10px
     transition: 0.3s linear
 
     &:hover
-        transform: scale(1.05)
-        background: rgba($secondaryColor, 0.1)
-
-    &:hover .descriptionContainer
-        -ms-overflow-style: auto
-        scrollbar-width: 10px
-
-        &::-webkit-scrollbar
-            display: block
+        transform: scale(1.04)
+        background: color.adjust($secondaryColor, $blackness: 70%)
 
     .image
         margin-left: 1rem
@@ -70,9 +63,9 @@ $eventRadius: 10px
 
             &::-webkit-scrollbar
                 display: none
-            
-
+                        
             .description
 
                 height: 70%
                 font-family: 'Arimo', sans-serif
+                color: color.adjust($primaryColor, $alpha: -0.35)

@@ -8,7 +8,7 @@ export default function Header () {
     return (<>
         <nav className={styles.navbar}>
             <div className={styles.tabs}>
-                {tabs.map(tab => 
+                {tabs.filter(tab => !tab?.disabled).map(tab => 
                     <Link href={tab.route} key={tab.displayName}>
                         <a className={`${styles.tab} circleHover`}>{tab.displayName}</a>
                     </Link>

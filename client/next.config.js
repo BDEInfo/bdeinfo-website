@@ -1,9 +1,11 @@
 const path = require('path')
 
-module.exports = {
+const nextConfig = {
     sassOptions: {
         includePaths: [
             path.join(__dirname, 'public/styles/')
         ]
     }
 }
+
+module.exports = nextConfig

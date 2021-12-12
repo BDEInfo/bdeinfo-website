@@ -15,5 +15,14 @@ export default function Default ({children}) {
         <div id="cursorCircle"></div>
 
         <Script src="/scripts/circleCursor.js" strategy="beforeInteractive" />
+        <Script 
+            src="/scripts/circleCursor.js"
+            strategy="afterInteractive"
+        />
+        <Script 
+            src="https://kit.fontawesome.com/d055a26e11.js"
+            strategy="beforeInteractive"
+            crossOrigin="anonymous"
+        />
     </>)
 }
