@@ -4,7 +4,8 @@
   "info": {
     "singularName": "bde-member",
     "pluralName": "bde-members",
-    "displayName": "BDE Member"
+    "displayName": "BDE Member",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -23,12 +24,13 @@
       "type": "string",
       "default": "Membre du bureau"
     },
-    "picture": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     }
   }
 }

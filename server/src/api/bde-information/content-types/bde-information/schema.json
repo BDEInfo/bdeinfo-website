@@ -4,7 +4,8 @@
   "info": {
     "singularName": "bde-information",
     "pluralName": "bde-informations",
-    "displayName": "BDE Informations"
+    "displayName": "BDE Informations",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -29,22 +30,32 @@
       "required": false
     },
     "statuts": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "files"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "mandat": {
       "type": "string",
       "required": false
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }
