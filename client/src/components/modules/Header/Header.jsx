@@ -3,7 +3,7 @@ import styles from './Header.module.sass'
 
 import { tabs } from '@config/navbar'
 
-export default function Header () {
+export default function Header ({ links }) {
 
     return (<>
         <nav className={styles.navbar}>
@@ -17,9 +17,9 @@ export default function Header () {
         </nav>
 
         <div className={styles.links}>
-            <i className={`${styles.link} circleHover fab fa-instagram`}></i>
-            <i className={`${styles.link} circleHover fab fa-facebook`}></i>
-            <i className={`${styles.link} circleHover fas fa-link`}></i>
+            <a href={links.instagram}><i className={`${styles.link} circleHover fab fa-instagram`}></i></a>
+            <a href={links.facebook}><i className={`${styles.link} circleHover fab fa-facebook`}></i></a>
+            <a href={links.linktree}><i className={`${styles.link} circleHover fas fa-link`}></i></a>
         </div>
 
     </>)

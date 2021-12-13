@@ -8,7 +8,7 @@
             "@layout/*": ["components/layouts/*"],
             "@module/*": ["components/modules/*"],
             "@template/*": ["components/templates/*"],
-            "@context/*": ["context/*"],
+            "@context/*": ["contexts/*"],
             "@hook/*": ["hooks/*"],
             "@util/*": ["utils/*"],
             "@style/*": ["../public/styles/*"]

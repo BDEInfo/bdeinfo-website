@@ -3,10 +3,10 @@ import Default from '@layout/Default'
 import axios from '@util/axios'
 import { formatJSONResponse } from '@util/format'
 
-export default function App ({ homePage, events }) {
+export default function App ({ links, homePage, events }) {
     
     return (<>
-        <Default>
+        <Default links={links}>
             <HomePage homePage={homePage} events={events}/>
         </Default>
     </>)
@@ -14,7 +14,8 @@ export default function App ({ homePage, events }) {
 
 export async function getStaticProps () {
 
-    const [homePage, events] = await Promise.all([
+    const [links, homePage, events] = await Promise.all([
+        axios('/link'),
         axios('/home-page'),
         axios('/events', {
             params: {
@@ -26,6 +27,7 @@ export async function getStaticProps () {
 
     return {
         props: {
+            links: formatJSONResponse(links.data),
             homePage: formatJSONResponse(homePage.data),
             events: formatJSONResponse(events.data)
         }

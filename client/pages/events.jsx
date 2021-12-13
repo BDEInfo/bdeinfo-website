@@ -4,10 +4,10 @@ import Default from '@layout/Default'
 import axios from '@util/axios'
 import { formatJSONResponse } from '@util/format'
 
-export default function App ({ events, defaultEventImage }) {
+export default function App ({ links, events, defaultEventImage }) {
 
     return (<>
-        <Default>
+        <Default links={links}>
             <Events events={events} defaultEventImage={defaultEventImage}/>
         </Default>
     </>)
@@ -15,7 +15,8 @@ export default function App ({ events, defaultEventImage }) {
 
 export async function getStaticProps () {
 
-    const [homePage, events] = await Promise.all([
+    const [links, homePage, events] = await Promise.all([
+        axios('/link'),
         axios('/home-page'),
         axios('/events', {
             params: {
@@ -26,6 +27,7 @@ export async function getStaticProps () {
 
     return {
         props: {
+            links: formatJSONResponse(links.data),
             defaultEventImage: formatJSONResponse(homePage.data.data.attributes.defaultEventImage),
             events: formatJSONResponse(events.data)
         }

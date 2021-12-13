@@ -6,10 +6,10 @@ import { formatJSONResponse } from '@util/format'
 
 import { fetchAdherents } from '@util/adherents'
 
-export default function App ({ bdeInformations, bdeMembers, adherents }) {
+export default function App ({ links, bdeInformations, bdeMembers, adherents }) {
 
     return (<>
-        <Default>
+        <Default links={links}>
             <About bdeInformations={bdeInformations} bdeMembers={bdeMembers} adherents={adherents}/>
         </Default>
     </>)
@@ -17,7 +17,8 @@ export default function App ({ bdeInformations, bdeMembers, adherents }) {
 
 export async function getStaticProps () {
 
-    const [bdeInformations, bdeMembers] = await Promise.all([
+    const [links, bdeInformations, bdeMembers] = await Promise.all([
+        axios('/link'),
         axios('/bde-information'),
         axios('/bde-members')
     ])
@@ -27,6 +28,7 @@ export async function getStaticProps () {
     
     return {
         props: {
+            links: formatJSONResponse(links.data),
             bdeInformations: formatJSONResponse(bdeInformations.data),
             bdeMembers: formatJSONResponse(bdeMembers.data),
             adherents
