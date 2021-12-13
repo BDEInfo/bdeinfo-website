@@ -12,8 +12,6 @@ document.addEventListener('popstate', (e) => {
 
 document.onmousemove = (e) => {
 
-    console.log(mouseCircle)
-
     elementMouseIsOver = document.elementFromPoint(e.pageX, e.pageY);
 
     if (elementMouseIsOver.classList.contains('circleHover')) {

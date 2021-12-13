@@ -1,6 +1,7 @@
 import styles from './About.module.sass'
 import Modal from '@layout/Modal'
 import Adherents from '@module/Adherents/Adherents'
+import BDEMembers from '@module/BDEMembers/BDEMembers'
 
 import { getImage } from '@util/image'
 import apiURL from '@config/connection'
@@ -10,7 +11,8 @@ import { useState } from 'react'
 
 export default function About ({ bdeInformations, bdeMembers, adherents }) {
 
-    const [showModal, setShowModal] = useState(false)
+    const [membersModal, setMembersModal] = useState(false)
+    const [adherentsModal, setAdherentsModal] = useState(false)
 
     return (<>
 
@@ -43,18 +45,26 @@ export default function About ({ bdeInformations, bdeMembers, adherents }) {
             <div className={styles.separator} />
 
             <div className={styles.interactions}>
+                <a className={`${styles.members} circleHover`} onClick={() => setMembersModal(true)}>
+                    <div className={styles.text}>Membres <i className="circleHover fas fa-users"></i></div>
+                </a>
                 <a className={`${styles.status} circleHover`} href={`${apiURL}${bdeInformations.statuts.url}`} target="_blank">
                     <div className={styles.text}>Statuts <i className="circleHover fas fa-book"></i></div>
                 </a>
-                <a className={`${styles.adherents} circleHover`} onClick={() => setShowModal(true)}>
+                <a className={`${styles.adherents} circleHover`} onClick={() => setAdherentsModal(true)}>
                     <div className={styles.text}>Adhérents <i className="circleHover fas fa-users"></i></div>
                 </a>
             </div>
 
+            <Modal onClose={() => setMembersModal(false)} show={membersModal} title={`Membres du Bureau ${bdeInformations.mandat}`}>
+                <BDEMembers bdeMembers={bdeMembers}/>
+            </Modal>
 
-            <Modal onClose={() => setShowModal(false)} show={showModal} title={`Adhérents ${bdeInformations.mandat}`}>
+            <Modal onClose={() => setAdherentsModal(false)} show={adherentsModal} title={`Adhérents ${bdeInformations.mandat}`}>
                 <Adherents adherents={adherents}/>
             </Modal>
+
+
 
         </div>
 

@@ -24,9 +24,7 @@ export async function getStaticProps () {
 
     // parse adherents google spreadsheet
     const adherents = await fetchAdherents()
-
-    console.log(adherents)
-
+    
     return {
         props: {
             bdeInformations: formatJSONResponse(bdeInformations.data),
