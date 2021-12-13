@@ -7,7 +7,7 @@ const sizeOptions = [
     'thumbnail'
 ]
 
-export default function getImage (imageObject, size = 'medium', defaultImage) {
+export function getImage (imageObject, size = 'medium', defaultImage) {
 
     if (!imageObject) imageObject = defaultImage
 

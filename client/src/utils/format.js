@@ -1,4 +1,9 @@
-export default function formatJSONResponse (object) {
+import dateformat from 'dateformat'
+import React from 'react'
+
+export function formatDate (date) { return dateformat(date, 'dd/mm à HH:MM') }
+
+export function formatJSONResponse (object) {
 
     object = object.data || object
     if (Array.isArray(object)) {
@@ -14,4 +19,11 @@ export default function formatJSONResponse (object) {
         object.attributes.id = object.id
         return object.attributes
     }
+}
+
+export function escapeNewLine (string) {
+
+    return string.split('\n').map((item, index) => {
+        return (index === 0) ? item : [<br key={index} />, item]
+    })
 }

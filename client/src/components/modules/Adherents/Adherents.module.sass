@@ -1,0 +1,38 @@
+@use '_variables' as *
+@use 'sass:color'
+
+    
+.count
+
+    margin:
+        left: 1rem
+        bottom: 1rem
+
+    font-family: 'Poppins', sans-serif
+    font-weight: 300
+
+    color: grey
+
+    span 
+        color: $secondaryColor
+
+.adherents
+
+    display: flex
+    flex-wrap: wrap
+
+    .adherent
+
+        font-family: 'Poppins', sans-serif
+        font-weight: 300
+
+        margin: .3rem
+        padding: .3rem
+        background: color.adjust($backgroundColor, $whiteness: 20%)
+        border-radius: 3px
+
+        cursor: default
+        transition: .2s linear
+
+        // &:hover
+        //     background: $secondaryColor

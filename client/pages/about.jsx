@@ -2,13 +2,15 @@ import About from '@template/About'
 import Default from '@layout/Default'
 
 import axios from '@util/axios'
-import formatJSONResponse from '@util/formatJSONResponse'
+import { formatJSONResponse } from '@util/format'
 
-export default function App ({ bdeInformations, bdeMembers}) {
+import { fetchAdherents } from '@util/adherents'
+
+export default function App ({ bdeInformations, bdeMembers, adherents }) {
 
     return (<>
         <Default>
-            <About bdeInformations={bdeInformations} bdeMembers={bdeMembers}/>
+            <About bdeInformations={bdeInformations} bdeMembers={bdeMembers} adherents={adherents}/>
         </Default>
     </>)
 }
@@ -20,10 +22,16 @@ export async function getStaticProps () {
         axios('/bde-members')
     ])
 
+    // parse adherents google spreadsheet
+    const adherents = await fetchAdherents()
+
+    console.log(adherents)
+
     return {
         props: {
             bdeInformations: formatJSONResponse(bdeInformations.data),
-            bdeMembers: formatJSONResponse(bdeMembers.data)
+            bdeMembers: formatJSONResponse(bdeMembers.data),
+            adherents
         }
     }
 }

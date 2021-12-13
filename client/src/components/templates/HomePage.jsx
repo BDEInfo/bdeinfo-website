@@ -3,8 +3,8 @@ import styles from './HomePage.module.sass'
 
 import useInterval from '@hook/useInterval'
 
-import formatDate from '@util/formatDate'
-import getImage from '@util/getImage'
+import { formatDate } from '@util/format'
+import { getImage } from '@util/image'
 
 export default function HomePage ({ homePage, events }) {
 

@@ -2,7 +2,7 @@ import Events from '@template/Events'
 import Default from '@layout/Default'
 
 import axios from '@util/axios'
-import formatJSONResponse from '@util/formatJSONResponse'
+import { formatJSONResponse } from '@util/format'
 
 export default function App ({ events, defaultEventImage }) {
 

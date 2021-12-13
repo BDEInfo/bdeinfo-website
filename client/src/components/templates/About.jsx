@@ -1,12 +1,16 @@
 import styles from './About.module.sass'
+import Modal from '@layout/Modal'
+import Adherents from '@module/Adherents/Adherents'
 
-import getImage from '@util/getImage'
+import { getImage } from '@util/image'
 import apiURL from '@config/connection'
 
 import Tilt from 'react-tilt'
-import Link from 'next/link'
+import { useState } from 'react'
 
-export default function About ({ bdeInformations }) {
+export default function About ({ bdeInformations, bdeMembers, adherents }) {
+
+    const [showModal, setShowModal] = useState(false)
 
     return (<>
 
@@ -42,11 +46,18 @@ export default function About ({ bdeInformations }) {
                 <a className={`${styles.status} circleHover`} href={`${apiURL}${bdeInformations.statuts.url}`} target="_blank">
                     <div className={styles.text}>Statuts <i className="circleHover fas fa-book"></i></div>
                 </a>
-                <a className={`${styles.adherents} circleHover`} href="/adherents">
+                <a className={`${styles.adherents} circleHover`} onClick={() => setShowModal(true)}>
                     <div className={styles.text}>Adhérents <i className="circleHover fas fa-users"></i></div>
                 </a>
             </div>
 
+
+            <Modal onClose={() => setShowModal(false)} show={showModal} title={`Adhérents ${bdeInformations.mandat}`}>
+                <Adherents adherents={adherents}/>
+            </Modal>
+
         </div>
+
+        
     </>)
 }

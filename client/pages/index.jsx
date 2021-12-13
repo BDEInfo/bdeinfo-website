@@ -1,7 +1,7 @@
 import HomePage from '@template/HomePage'
 import Default from '@layout/Default'
 import axios from '@util/axios'
-import formatJSONResponse from '@util/formatJSONResponse'
+import { formatJSONResponse } from '@util/format'
 
 export default function App ({ homePage, events }) {
     

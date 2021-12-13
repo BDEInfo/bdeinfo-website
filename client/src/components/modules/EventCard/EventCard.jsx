@@ -1,8 +1,7 @@
 import styles from './EventCard.module.sass'
 
-import formatDate from '@util/formatDate'
-import { escapeNewLine } from '@util/formatText'
-import getImage from '@util/getImage'
+import { escapeNewLine, formatDate } from '@util/format'
+import { getImage } from '@util/image'
 
 export default function EventCard ({ event, defaultEventImage }) {
 
