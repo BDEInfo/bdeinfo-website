@@ -4,7 +4,7 @@ const rootElement = getComputedStyle(document.querySelector(':root')),
 
 let mousePosX = 0,
     mousePosY = 0,
-    mouseCircle = document.getElementById('cursorCircle');
+    mouseCircle = document.getElementById('cursorCircle')
 
 document.addEventListener('popstate', (e) => {
     mouseCircle = document.getElementById('cursorCirle')
@@ -12,7 +12,9 @@ document.addEventListener('popstate', (e) => {
 
 document.onmousemove = (e) => {
 
-    elementMouseIsOver = document.elementFromPoint(e.pageX, e.pageY);
+    mouseCircle = document.getElementById('cursorCircle')
+
+    elementMouseIsOver = document.elementFromPoint(e.pageX, e.pageY)
 
     if (elementMouseIsOver.classList.contains('circleHover')) {
         mouseCircle.style.transform = 'translate(-50%, -50%) scale(1.8)'
@@ -23,23 +25,23 @@ document.onmousemove = (e) => {
         mouseCircle.style.borderColor = primaryColor
     }
 
-    mousePosX = e.pageX;
-    mousePosY = e.pageY;
+    mousePosX = e.pageX
+    mousePosY = e.pageY
 }
 
 let delay = 6,
     revisedMousePosX = 0,
-    revisedMousePosY = 0;
+    revisedMousePosY = 0
 
 function delayMouseFollow() {
 
     requestAnimationFrame(delayMouseFollow);
 
-    revisedMousePosX += (mousePosX - revisedMousePosX) / delay;
-    revisedMousePosY += (mousePosY - revisedMousePosY) / delay; 
+    revisedMousePosX += (mousePosX - revisedMousePosX) / delay
+    revisedMousePosY += (mousePosY - revisedMousePosY) / delay
 
-    mouseCircle.style.top = revisedMousePosY + 'px';
-    mouseCircle.style.left = revisedMousePosX + 'px';
+    mouseCircle.style.top = revisedMousePosY + 'px'
+    mouseCircle.style.left = revisedMousePosX + 'px'
 }
 
-delayMouseFollow();
+delayMouseFollow()

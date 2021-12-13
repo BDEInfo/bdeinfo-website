@@ -46,13 +46,13 @@ export default function About ({ bdeInformations, bdeMembers, adherents }) {
 
             <div className={styles.interactions}>
                 <a className={`${styles.members} circleHover`} onClick={() => setMembersModal(true)}>
-                    <div className={styles.text}>Membres <i className="circleHover fas fa-users"></i></div>
+                    <div className={`${styles.text} circleHover`}>Membres <i className="circleHover fas fa-users"></i></div>
                 </a>
                 <a className={`${styles.status} circleHover`} href={`${apiURL}${bdeInformations.statuts.url}`} target="_blank">
-                    <div className={styles.text}>Statuts <i className="circleHover fas fa-book"></i></div>
+                    <div className={`${styles.text} circleHover`}>Statuts <i className="circleHover fas fa-book"></i></div>
                 </a>
                 <a className={`${styles.adherents} circleHover`} onClick={() => setAdherentsModal(true)}>
-                    <div className={styles.text}>Adhérents <i className="circleHover fas fa-users"></i></div>
+                    <div className={`${styles.text} circleHover`}>Adhérents <i className="circleHover fas fa-users"></i></div>
                 </a>
             </div>
 
