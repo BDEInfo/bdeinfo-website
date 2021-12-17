@@ -12,7 +12,7 @@ export default function App ({ links, homePage, events }) {
     </>)
 }
 
-export async function getStaticProps () {
+export async function getServerSideProps (ctx) {
 
     const [links, homePage, events] = await Promise.all([
         axios('/link'),

@@ -15,7 +15,7 @@ export default function App ({ links, bdeInformations, bdeMembers, adherents }) 
     </>)
 }
 
-export async function getStaticProps () {
+export async function getServerSideProps (ctx) {
 
     const [links, bdeInformations, bdeMembers] = await Promise.all([
         axios('/link'),
