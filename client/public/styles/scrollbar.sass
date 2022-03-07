@@ -1,12 +1,18 @@
+@use '_variables' as *
+@use '_mixins' as *
+	
 ::-webkit-scrollbar
 	width: 10px
 	height: 10px
+
+	@include media-max($breakpoint-sm)
+		::-webkit-scrollbar
+			width: 5px
 
 ::-webkit-scrollbar-thumb 
 	border-radius: 10px
 	background: #444444
 
-  
 ::-webkit-scrollbar-track 
 	background: rgba(0, 0, 0, 0)
   
