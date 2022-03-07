@@ -12,6 +12,8 @@ document.addEventListener('popstate', (e) => {
 
 document.onmousemove = (e) => {
 
+    if (window.innerWidth > 768) return 
+
     mouseCircle = document.getElementById('cursorCircle')
 
     elementMouseIsOver = document.elementFromPoint(e.pageX, e.pageY)

@@ -14,3 +14,13 @@
 
     border-radius: 10px
     border: 1ps solid rgba(black, 0.18)
+
+@mixin media-min($_min-width)
+    @media screen and (min-width: $_min-width)
+        & 
+            @content
+
+@mixin media-max($_max-width)
+    @media screen and (max-width: $_max-width)
+        & 
+            @content

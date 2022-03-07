@@ -1,4 +1,5 @@
 @use '_variables' as *
+@use '_mixins' as *
 @use 'sass:color'
 
 .modalOverlay
@@ -37,6 +38,12 @@
         flex-direction: column
         align-items: center
 
+        @include media-max($breakpoint-sm)
+            width: 80vw
+
+            ::-webkit-scrollbar
+                width: 5px
+
         .modalHeader
 
             width: 100%
@@ -45,6 +52,9 @@
             justify-content: space-between
 
             font-size: 1.5rem
+
+            @include media-max($breakpoint-xs)
+                font-size: 1rem
 
             i
                 color: color.adjust(red, $alpha: -0.3)
@@ -55,6 +65,9 @@
 
                 &:hover 
                     color: red
+
+                @include media-max($breakpoint-xs)
+                    font-size: 1.5rem
 
         .separator
 

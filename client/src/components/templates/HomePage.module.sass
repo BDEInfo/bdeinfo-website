@@ -9,8 +9,15 @@
     left: 15%
     transform: translateY(-50%)
 
+    @include media-max($breakpoint-md)
+        top: 30%
+
+
+    @include media-max($breakpoint-lg)
+        left: 10%
+
     .title
-        font-size: clamp(40px, 4vw, 200px)
+        font-size: clamp(35px, 4vw, 200px)
         animation: fadeIn 1s ease forwards
         opacity: 0
 
@@ -33,13 +40,18 @@
                     text-shadow: 0 0 5px $secondaryColor, 0 0 10px $secondaryColor
 
     .preTitle
+        font-size: clamp(15px, 1.5vw, 200px)
         color: color.adjust($primaryColor, $alpha: -0.1)
 
     .postTitle
         font-family: 'Poppins'
+        font-size: clamp(15px, 1.2vw, 200px)
         font-weight: lighter
         letter-spacing: 0.15rem
         color: color.adjust($primaryColor, $alpha: -0.1)
+
+        @include media-max($breakpoint-xs)
+            width: 70%
 
 // CAROUSEL
 
@@ -59,6 +71,18 @@
     justify-content: center
     flex-direction: column
     align-items: center
+
+    @include media-max($breakpoint-xs)
+        height: 50%
+
+    @include media-max($breakpoint-md)
+        top: 70%
+        right: 10%
+    
+    @include media-max($breakpoint-lg)
+        right: 8%
+        transform: scale(0.8) translateY(-70%)
+
 
     .radio
         display: none

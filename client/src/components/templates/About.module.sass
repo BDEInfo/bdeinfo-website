@@ -1,4 +1,5 @@
 @use '_variables' as *
+@use '_mixins' as *
 @use 'sass:color'
     
 .aboutContainer
@@ -10,9 +11,93 @@
     align-items: center
     justify-content: space-around
     height: 100vh
+    overflow-y: scroll
+    overflow-x: hidden
     width: 75vw
     text-align: center
 
+    &::-webkit-scrollbar
+        display: none
+
+    @include media-max($breakpoint-sm)
+
+        margin-top: 20vh
+        width: 75vw
+        flex-direction: column
+        align-items: center
+        justify-content: flex-start
+
+    .informationsContainer
+
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+
+    .informations
+
+        position: absolute
+        top: 0
+        height: 100%
+
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+
+        opacity: 0
+
+        transition: .2s linear
+
+        @include media-max($breakpoint-sm)
+            opacity: 1
+            position: relative
+            width: 100%
+
+        .logo
+            @include media-max($breakpoint-sm)
+                height: 40vw
+
+        .title
+            font-size: 2rem
+
+            @include media-max($breakpoint-sm)
+                font-size: 1rem
+
+        .description
+            margin-top: 1rem
+
+            font-family: "Poppins", sans-serif
+            font-weight: 500
+            color: color.adjust($primaryColor, $alpha: -0.1)
+
+            @include media-max($breakpoint-sm)
+                font-size: 0.9rem
+
+            @include media-min($breakpoint-sm)
+                width: 80%
+
+        .subInformations
+
+            display: flex
+            justify-content: center
+            align-items: center
+
+            margin-top: 1rem
+
+            @include media-max($breakpoint-sm)
+                flex-direction: column
+
+            div 
+
+                margin: .8rem
+                color: color.adjust($secondaryColor, $whiteness: 50%)
+
+                @include media-max($breakpoint-sm)
+                    font-size: 0.8rem
+                    margin: .5rem
+
+        
     .tilt
 
         display: flex
@@ -26,52 +111,12 @@
         margin:
             // left: -10rem
             top: 3rem 
-        
+
         &:hover 
             .image
                 opacity: 0.05
             .informations
-                opacity: 1
-
-        .informations
-
-            position: absolute
-            top: 0
-            height: 100%
-
-            display: flex
-            flex-direction: column
-            align-items: center
-            justify-content: center
-
-            opacity: 0
-
-            transition: .2s linear
-
-            .title 
-                font-size: 2rem
-
-            .description
-
-                margin-top: 1rem
-
-                font-family: "Poppins", sans-serif
-                font-weight: 500
-                color: color.adjust($primaryColor, $alpha: -0.1)
-
-            .subInformations
-
-                display: flex
-                justify-content: center
-                align-items: center
-
-                margin-top: 1rem
-
-                div 
-
-                    margin: .8rem
-                    color: color.adjust($secondaryColor, $whiteness: 50%)
-
+                opacity: 1            
 
         .mandat 
             
@@ -82,17 +127,29 @@
             color: #e4e9efa2
             font-size: 1.5rem
 
-        .image 
+            @include media-max($breakpoint-sm)
+                display: none
 
-            height: 60vh
-            border-radius: 5px
+    .image 
 
-            opacity: 0.9
+        height: 60vh
+        border-radius: 5px
 
-            transition: .2s linear
+        opacity: 0.9
+
+        transition: .2s linear
+
+        @include media-max($breakpoint-lg)
+            height: 50vh
+
+        @include media-max($breakpoint-sm)
+            height: 25vh
+            margin: 2rem auto
 
     .interactions
 
+        @include media-max($breakpoint-sm)
+            margin-bottom: 25vh
 
         div
             margin: 2rem 0rem
@@ -106,11 +163,17 @@
 
             cursor: pointer
             transition: .3s linear
-
+                
             &:hover 
                 background: color.adjust($secondaryColor, $alpha: -.4)
 
+            @include media-max($breakpoint-sm)
+                font-size: 0.8rem
+                padding: 0.7rem
+
             i
                 margin-left: 1rem
+
+
 
     
