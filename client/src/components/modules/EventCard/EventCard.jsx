@@ -3,7 +3,7 @@ import styles from './EventCard.module.sass'
 import { escapeNewLine, formatDate } from '@util/format'
 import { getImage } from '@util/image'
 
-export default function EventCard ({ event, defaultEventImage }) {
+export default function EventCard ({ event }) {
 
     return (
         <div key={event.id} className={styles.event}>
