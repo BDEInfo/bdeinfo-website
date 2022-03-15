@@ -13,7 +13,7 @@ export default function App ({ links, events, defaultEventImage }) {
     </>)
 }
 
-export async function getServerSideProps (ctx) {
+export async function getStaticProps () {
 
     const [links, homePage, events] = await Promise.all([
         axios('/link'),
@@ -30,6 +30,7 @@ export async function getServerSideProps (ctx) {
             links: formatJSONResponse(links.data),
             defaultEventImage: formatJSONResponse(homePage.data.data.attributes.defaultEventImage),
             events: formatJSONResponse(events.data)
-        }
+        },
+        revalidate: 20
     }
 }

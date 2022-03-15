@@ -11,7 +11,7 @@ const missingImage = 'assets/missingImage.png'
 
 export function getImage (imageObject, size = 'medium', defaultImage) {
 
-    if (!imageObject?.data) {
+    if (!imageObject) {
         if (defaultImage) imageObject = defaultImage
         else return missingImage
     }

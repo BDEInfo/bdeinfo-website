@@ -15,7 +15,7 @@ export default function App ({ links, bdeInformations, bdeMembers, adherents }) 
     </>)
 }
 
-export async function getServerSideProps (ctx) {
+export async function getStaticProps () {
 
     const [links, bdeInformations, bdeMembers] = await Promise.all([
         axios('/link'),
@@ -32,6 +32,7 @@ export async function getServerSideProps (ctx) {
             bdeInformations: formatJSONResponse(bdeInformations.data),
             bdeMembers: formatJSONResponse(bdeMembers.data),
             adherents
-        }
+        },
+        revalidate: 20
     }
 }

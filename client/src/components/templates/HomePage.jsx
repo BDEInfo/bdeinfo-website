@@ -38,7 +38,7 @@ export default function HomePage ({ homePage, events }) {
             <div className={styles.events}>
                 {events.map((event, i) => 
                     <label className={styles.event} htmlFor={`item-${i+1}`} id={styles[`event-${i+1}`]} key={event.id}>
-                        <img className={styles.eventImg} src={getImage(event.image, 'medium', homePage.defaultEventImage)}/>
+                        <img className={styles.eventImg} src={getImage(event.image, 'medium')}/>
                     </label>
                 )}
             </div>

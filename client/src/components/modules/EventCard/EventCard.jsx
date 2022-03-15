@@ -6,8 +6,8 @@ import { getImage } from '@util/image'
 export default function EventCard ({ event, defaultEventImage }) {
 
     return (
-        <div key={event.id} className={styles.event} key={event.id}>
-            <img className={styles.image} src={getImage(event.image, 'small', defaultEventImage)}/>
+        <div key={event.id} className={styles.event}>
+            <img className={styles.image} src={getImage(event.image, 'small')}/>
             <div className={styles.infos}>
                 <h2 className={styles.title}>
                     {event.title}
