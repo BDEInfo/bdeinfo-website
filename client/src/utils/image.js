@@ -7,9 +7,14 @@ const sizeOptions = [
     'thumbnail'
 ]
 
+const missingImage = 'assets/missingImage.png'
+
 export function getImage (imageObject, size = 'medium', defaultImage) {
 
-    if (!imageObject) imageObject = defaultImage
+    if (!imageObject?.data) {
+        if (defaultImage) imageObject = defaultImage
+        else return missingImage
+    }
 
     const sizeIndex = sizeOptions.indexOf(size)
     if (sizeIndex < 0) return defaultImage.url
