@@ -25,14 +25,6 @@
       "type": "integer",
       "default": 5,
       "required": false
-    },
-    "defaultEventImage": {
-      "type": "media",
-      "multiple": false,
-      "required": true,
-      "allowedTypes": [
-        "images"
-      ]
     }
   }
 }
