@@ -1,7 +1,6 @@
 export const trollUrls = [
     "https://fr.pornhub.com/",
     "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    "https://www.youtube.com/watch?v=uTMSzOpJFnI",
     "https://www.youtube.com/watch?v=_x_VfiX6yCE",
     "https://www.youtube.com/watch?v=f_XvZjFjk0I",
     "https://matias.ma/nsfw/",
