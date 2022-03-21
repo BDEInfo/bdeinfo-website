@@ -20,7 +20,7 @@ export async function getStaticProps () {
     const [links, bdeInformations, bdeMembers] = await Promise.all([
         axios('/link'),
         axios('/bde-information'),
-        axios('/bde-members')
+        axios('/bde-members?pagination[pageSize]=50')
     ])
 
     // parse adherents google spreadsheet
