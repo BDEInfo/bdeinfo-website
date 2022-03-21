@@ -9,7 +9,7 @@ export default function Adherents ({ adherents }) {
         { adherents.map(adherent => 
             <a href={trollUrls[Math.floor(Math.random() * trollUrls.length)]}>
                 <li className={styles.adherent}>
-                    {adherent.firstName} <span>{adherent.lastName}</span>
+                    {adherent.firstName} <span>{adherent.lastName[0]}.</span>
                 </li>
             </a>
         )}
