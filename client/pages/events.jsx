@@ -20,7 +20,8 @@ export async function getStaticProps () {
         axios('/events', {
             params: {
                 'sort': 'startDate:DESC',
-                'pagination[pageSize]': 51
+                'pagination[pageSize]': 50,
+                'filters[archived][$eq]': false
             }
         })
     ])
