@@ -33,17 +33,20 @@ Il permet de gérer les données ainsi que leur ajouts via une interface pré-fa
 
 Le site a été plus ou moins conceptualisé comme une [JAMStack](https://jamstatic.fr/2019/02/07/c-est-quoi-la-jamstack/). Le front-end et le back-end sont totalement découplés et intéragissent entre eux à l'aide d'appels API.
 
-<img src="https://i.imgur.com/aIlQFKr.png" align="center">
-![](https://i.imgur.com/aIlQFKr.png)
+<p align="center">
+    <img src="https://i.imgur.com/aIlQFKr.png">
+</p>
+    
 
 Comme expliqué précédemment, Next.js propose plusieurs modes de rendu. Étant donné que le site du BDE est principalement statique, mais possède tout de même des données qui changent de temps en temps (la liste des évènements), le choix a été fait d'utiliser le mode de rendu [ISR](https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration).
 
 Donc concrètement, l'application est générée au moment de la compilation, mais va vérifier tous les *x* temps si les données n'ont pas changées. Si c'est le cas, alors la page concernée sera re-générée.
 Ainsi, on bénéficie des avantages de la génération statique côté serveur, et tout particulièrement d'une rapidité époustouflante côté client couplée à une faible charge côté serveur étant donnée que le HTML, CSS et JS sont déjà générés et n'attendent qu'à être envoyés aux utilisateurs.
 De plus, les pages déjà générées seront mises à jour régulièrement avec les dernières données en date.
-
-
-![](https://i.imgur.com/RPlUg0K.png)
+<br>
+<p align="center">
+    <img width="75%" src="https://i.imgur.com/RPlUg0K.png">
+</p>
 
 ## Structure du projet
 
