@@ -36,3 +36,5 @@ services:
 
 networks:
   nginx:
+    external:
+      name: nginx
