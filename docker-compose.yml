@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  
+  bdeinfo-client:
+    container_name: bdeinfo-client
+    build:
+      context: ./client
+      dockerfile: ./.docker/Dockerfile
+    restart: always
+    networks:
+      - nginx
+    env_file:
+      - ./client/.env 
+    ports:
+      - "3000:3000"
+    depends_on:
+      - bdeinfo-server
+    
+  bdeinfo-server:
+    container_name: bdeinfo-server
+    build:
+      context: ./server
+      dockerfile: ./.docker/Dockerfile
+    networks:
+      - nginx
+    ports:
+      - "8001:1337"
+    env_file:
+      - ./server/.env
+    volumes:
+      - ./server/database/:/app/database/
+      - ./server/public/uploads/:/app/public/uploads/
+      - ./server/src/:/app/src/
+    restart: always
+
+networks:
+  nginx:
