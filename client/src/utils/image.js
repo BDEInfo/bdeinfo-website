@@ -11,7 +11,7 @@ const missingImage = 'assets/missingImage.png'
 
 export function getImage (imageObject, size = 'medium', defaultImage) {
 
-    if (!imageObject) {
+    if (!imageObject || imageObject.data === null) {
         if (defaultImage) imageObject = defaultImage
         else return missingImage
     }
@@ -21,5 +21,6 @@ export function getImage (imageObject, size = 'medium', defaultImage) {
     for (const sizeOption of sizeOptions.slice(sizeIndex)) {
         if (imageObject?.formats[sizeOption]?.url) return apiURL + imageObject.formats[sizeOption].url
     }
+    
     return apiURL + imageObject.url
 }
