@@ -20,10 +20,6 @@
       "type": "string",
       "required": true
     },
-    "role": {
-      "type": "string",
-      "default": "Membre du bureau"
-    },
     "image": {
       "type": "media",
       "multiple": false,
@@ -31,6 +27,11 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "poste": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::poste.poste"
     }
   }
 }

@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "postes",
+  "info": {
+    "singularName": "poste",
+    "pluralName": "postes",
+    "displayName": "Poste",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "grade": {
+      "type": "enumeration",
+      "enum": [
+        "CM",
+        "RP",
+        "BD",
+        "BG",
+        "JD",
+        "JG",
+        "CD",
+        "CG"
+      ],
+      "required": false
+    },
+    "weight": {
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "max": 50
+    }
+  }
+}

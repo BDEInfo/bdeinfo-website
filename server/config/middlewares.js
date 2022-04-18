@@ -4,8 +4,9 @@ module.exports = [
   'strapi::cors',
   'strapi::poweredBy',
   'strapi::logger',
-  'strapi::query',
   'strapi::body',
+  'strapi::query',
+  'strapi::session',
   'strapi::favicon',
   'strapi::public',
 ];
