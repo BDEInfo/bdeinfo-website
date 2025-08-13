@@ -20,6 +20,15 @@
       "type": "string",
       "required": true
     },
+    "description": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "linkedin": {
+      "type": "string"
+    },
     "image": {
       "type": "media",
       "multiple": false,
@@ -28,10 +37,11 @@
         "images"
       ]
     },
-    "poste": {
+    "postes": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::poste.poste"
+      "relation": "oneToMany",
+      "target": "api::poste.poste",
+      "mappedBy": "bde_member"
     }
   }
 }
