@@ -18,8 +18,8 @@
     },
     "email": {
       "type": "email",
-      "default": "contact@bdeinfo.org",
-      "required": false
+      "required": false,
+      "default": "contact@bdeinfo.org"
     },
     "phone": {
       "type": "string"
@@ -45,9 +45,10 @@
         "images"
       ]
     },
-    "mandat": {
-      "type": "string",
-      "required": false
+    "mandat_actuel": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::mandat.mandat"
     },
     "logo": {
       "type": "media",

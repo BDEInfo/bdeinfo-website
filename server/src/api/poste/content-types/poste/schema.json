@@ -33,9 +33,9 @@
       "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
       "required": false
     },
-    "bde_member": {
+    "bde_members": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::bde-member.bde-member",
       "inversedBy": "postes"
     }

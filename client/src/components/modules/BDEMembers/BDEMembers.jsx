@@ -1,6 +1,5 @@
 import styles from './BDEMembers.module.sass'
 
-import { getImage } from '@util/image'
 import BDEMemberCard from "@module/BDEMembers/BDEMemberCard/BDEMemberCard";
 
 function getHighestWeightedPoste (bdeMember) {

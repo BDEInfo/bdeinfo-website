@@ -6,21 +6,22 @@ import { formatJSONResponse } from '@util/format'
 
 import { fetchAdherents } from '@util/adherents'
 
-export default function App ({ links, bdeInformations, bdeMembers, adherents }) {
+export default function App ({ links, bdeInformations, bdeMembers, adherents, mandats }) {
 
     return (<>
         <Default links={links}>
-            <About bdeInformations={bdeInformations} bdeMembers={bdeMembers} adherents={adherents}/>
+            <About bdeInformations={bdeInformations} bdeMembers={bdeMembers} adherents={adherents} mandats={mandats}/>
         </Default>
     </>)
 }
 
 export async function getStaticProps () {
 
-    const [links, bdeInformations, bdeMembers] = await Promise.all([
+    const [links, bdeInformations, bdeMembers, mandats] = await Promise.all([
         axios('/link'),
-        axios('/bde-information'),
-        axios('/bde-members?pagination[pageSize]=50')
+        axios('/bde-information', { params: { populate: ['logo', 'image', 'statuts', 'mandat_actuel'] } }),
+        axios('/bde-members', { params: { pagination: { pageSize: 50 }, populate: ['image', 'postes', 'mandat'] } }),
+        axios('/mandats', { params: { sort: 'annee:desc', populate: ['logo'] } })
     ])
 
     // parse adherents google spreadsheet
@@ -31,7 +32,8 @@ export async function getStaticProps () {
             links: formatJSONResponse(links.data),
             bdeInformations: formatJSONResponse(bdeInformations.data),
             bdeMembers: formatJSONResponse(bdeMembers.data),
-            adherents
+            adherents,
+            mandats: formatJSONResponse(mandats.data)
         },
         revalidate: 20
     }

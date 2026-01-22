@@ -65,6 +65,11 @@
     "archived": {
       "type": "boolean",
       "default": false
+    },
+    "tarifs": {
+      "type": "component",
+      "component": "prix-evenement.tarif",
+      "repeatable": true
     }
   }
 }

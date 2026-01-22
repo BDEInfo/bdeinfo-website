@@ -12,11 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "firstName": {
-      "type": "string",
-      "required": true
-    },
-    "lastName": {
+    "name": {
       "type": "string",
       "required": true
     },
@@ -39,9 +35,14 @@
     },
     "postes": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::poste.poste",
-      "mappedBy": "bde_member"
+      "mappedBy": "bde_members"
+    },
+    "mandat": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::mandat.mandat"
     }
   }
 }

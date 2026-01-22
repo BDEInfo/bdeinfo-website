@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_prix_evenement_tarifs",
+  "info": {
+    "displayName": "tarif",
+    "icon": "priceTag"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "price": {
+      "type": "decimal",
+      "required": true
+    }
+  },
+  "config": {}
+}

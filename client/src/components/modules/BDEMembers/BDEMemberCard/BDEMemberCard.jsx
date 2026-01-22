@@ -10,10 +10,10 @@ export default function BDEMemberCard({ bdeMember }) {
             <div className={styles.cardContentFront}>
                 <img className={styles.image}
                      src={getImage(bdeMember.image)}
-                     alt={"Photo du membre " + bdeMember.firstName + " " + bdeMember.lastName}
+                     alt={"Photo du membre " + bdeMember.name}
                 />
                 <div className={styles.name}>
-                    {bdeMember.firstName} {bdeMember.lastName}
+                    {bdeMember.name}
                 </div>
                 <div className={styles.role}>
                     {sortedPostes[0] && (
@@ -30,7 +30,7 @@ export default function BDEMemberCard({ bdeMember }) {
 
             <div className={styles.cardContentBack}>
                 <div className={styles.name}>
-                    {bdeMember.firstName} {bdeMember.lastName}
+                    {bdeMember.name}
                 </div>
                 <div className={styles.link}>
                     <a className={"circleHover"} href={`mailto:${bdeMember.email}`}>

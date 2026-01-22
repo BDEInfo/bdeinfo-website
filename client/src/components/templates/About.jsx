@@ -1,20 +1,41 @@
 import styles from './About.module.sass'
 import Modal from '@layout/Modal'
+import ModalCustomTitle from '@layout/ModalCustomTitle'
 import Adherents from '@module/Adherents/Adherents'
 import BDEMembers from '@module/BDEMembers/BDEMembers'
+import MandatDropdown from '@module/MandatDropdown/MandatDropdown'
 
 import { getImage } from '@util/image'
 import apiURL from '@config/connection'
 import useWindowDimensions from '@hook/useWindowDimensions'
 
 import Tilt from 'react-tilt'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-export default function About ({ bdeInformations, bdeMembers, adherents }) {
+export default function About ({ bdeInformations, bdeMembers, adherents, mandats }) {
 
     const [membersModal, setMembersModal] = useState(false)
     const [adherentsModal, setAdherentsModal] = useState(false)
+    const [selectedMandat, setSelectedMandat] = useState(null)
     const [ width, height ] = useWindowDimensions()
+
+    // Initialiser le mandat sélectionné avec le mandat actuel du BDE
+    useEffect(() => {
+        if (!selectedMandat && mandats && mandats.length > 0) {
+            const mandatActuel = bdeInformations?.mandat_actuel
+            if (mandatActuel) {
+                const found = mandats.find(m => m.id === mandatActuel.id)
+                setSelectedMandat(found || mandats[0])
+            } else {
+                setSelectedMandat(mandats[0])
+            }
+        }
+    }, [mandats, bdeInformations])
+
+    // Filtrer les membres par mandat sélectionné
+    const filteredMembers = selectedMandat
+        ? bdeMembers.filter(member => member.mandat?.id === selectedMandat.id)
+        : bdeMembers
 
     return (<>
 
@@ -83,13 +104,37 @@ export default function About ({ bdeInformations, bdeMembers, adherents }) {
                 </a>
             </div>
 
-            <Modal onClose={() => setMembersModal(false)} show={membersModal} title={`Membres du Bureau ${bdeInformations.mandat}`}>
-                <BDEMembers bdeMembers={bdeMembers}/>
-            </Modal>
+            <ModalCustomTitle
+                onClose={() => setMembersModal(false)}
+                show={membersModal}
+                title="Membres du Bureau"
+                titleComponent={
+                    <MandatDropdown
+                        mandats={mandats}
+                        selectedMandat={selectedMandat}
+                        onMandatChange={setSelectedMandat}
+                        mandatActuelId={bdeInformations?.mandat_actuel?.id}
+                    />
+                }
+            >
+                <BDEMembers bdeMembers={filteredMembers}/>
+            </ModalCustomTitle>
 
-            <Modal onClose={() => setAdherentsModal(false)} show={adherentsModal} title={`Adhérents ${bdeInformations.mandat}`}>
+            <ModalCustomTitle
+                onClose={() => setAdherentsModal(false)}
+                show={adherentsModal}
+                title="Adhérents"
+                titleComponent={
+                    <MandatDropdown
+                        mandats={mandats}
+                        selectedMandat={selectedMandat}
+                        onMandatChange={setSelectedMandat}
+                        mandatActuelId={bdeInformations?.mandat_actuel?.id}
+                    />
+                }
+            >
                 <Adherents adherents={adherents}/>
-            </Modal>
+            </ModalCustomTitle>
 
 
 

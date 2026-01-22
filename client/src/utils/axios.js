@@ -5,9 +5,6 @@ const instance = Axios.create({
     baseURL: baseURL + '/api',
     headers: {
         'Authorization': `Bearer ${process.env.ADMIN_API_TOKEN}`
-    },
-    params: {
-        populate: '*'
     }
 })
 

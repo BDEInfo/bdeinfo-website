@@ -17,9 +17,9 @@ export default function Header ({ links }) {
         </nav>
 
         <div className={styles.links}>
-            <a href={links.instagram}><i className={`${styles.link} circleHover fab fa-instagram`}></i></a>
-            <a href={links.facebook}><i className={`${styles.link} circleHover fab fa-facebook`}></i></a>
-            <a href={links.linktree}><i className={`${styles.link} circleHover fas fa-link`}></i></a>
+            <a href={links.instagram} aria-label={"Notre Instagram"}><i className={`${styles.link} circleHover fab fa-instagram`}></i></a>
+            <a href={links.facebook} aria-label={"Notre Facebook"}><i className={`${styles.link} circleHover fab fa-facebook`}></i></a>
+            <a href={links.linktree} aria-label={"Notre Linktree"}><i className={`${styles.link} circleHover fas fa-link`}></i></a>
         </div>
 
     </>)

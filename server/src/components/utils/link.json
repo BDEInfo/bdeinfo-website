@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_utils_links",
+  "info": {
+    "displayName": "link",
+    "icon": "link"
+  },
+  "options": {},
+  "attributes": {
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "font_awesome_class_name": {
+      "type": "string",
+      "default": "fas fa-link",
+      "required": false
+    },
+    "open_new_page": {
+      "type": "boolean"
+    }
+  },
+  "config": {}
+}

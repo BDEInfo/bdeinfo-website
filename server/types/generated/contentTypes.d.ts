@@ -203,6 +203,63 @@ export interface AdminRole extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface AdminSession extends Struct.CollectionTypeSchema {
+  collectionName: 'strapi_sessions';
+  info: {
+    description: 'Session Manager storage';
+    displayName: 'Session';
+    name: 'Session';
+    pluralName: 'sessions';
+    singularName: 'session';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+    i18n: {
+      localized: false;
+    };
+  };
+  attributes: {
+    absoluteExpiresAt: Schema.Attribute.DateTime & Schema.Attribute.Private;
+    childId: Schema.Attribute.String & Schema.Attribute.Private;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    deviceId: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private;
+    expiresAt: Schema.Attribute.DateTime &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'admin::session'> &
+      Schema.Attribute.Private;
+    origin: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sessionId: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private &
+      Schema.Attribute.Unique;
+    status: Schema.Attribute.String & Schema.Attribute.Private;
+    type: Schema.Attribute.String & Schema.Attribute.Private;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    userId: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface AdminTransferToken extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_transfer_tokens';
   info: {
@@ -402,7 +459,7 @@ export interface ApiBdeInformationBdeInformation
     location: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'45.785981, 4.883337'>;
     logo: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
-    mandat: Schema.Attribute.String;
+    mandat_actuel: Schema.Attribute.Relation<'oneToOne', 'api::mandat.mandat'>;
     phone: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     statuts: Schema.Attribute.Media<'files'>;
@@ -429,9 +486,7 @@ export interface ApiBdeMemberBdeMember extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     description: Schema.Attribute.String;
     email: Schema.Attribute.Email;
-    firstName: Schema.Attribute.String & Schema.Attribute.Required;
     image: Schema.Attribute.Media<'images'>;
-    lastName: Schema.Attribute.String & Schema.Attribute.Required;
     linkedin: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -439,7 +494,9 @@ export interface ApiBdeMemberBdeMember extends Struct.CollectionTypeSchema {
       'api::bde-member.bde-member'
     > &
       Schema.Attribute.Private;
-    postes: Schema.Attribute.Relation<'oneToMany', 'api::poste.poste'>;
+    mandat: Schema.Attribute.Relation<'manyToOne', 'api::mandat.mandat'>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    postes: Schema.Attribute.Relation<'manyToMany', 'api::poste.poste'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -500,6 +557,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
         'afterwork',
       ]
     >;
+    tarifs: Schema.Attribute.Component<'prix-evenement.tarif', true>;
     title: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 50;
@@ -572,6 +630,40 @@ export interface ApiLinkLink extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiMandatMandat extends Struct.CollectionTypeSchema {
+  collectionName: 'mandats';
+  info: {
+    displayName: 'Mandat';
+    pluralName: 'mandats';
+    singularName: 'mandat';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    adherants: Schema.Attribute.Component<'custom-types.adherants', false> &
+      Schema.Attribute.Required;
+    annee: Schema.Attribute.String & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::mandat.mandat'
+    > &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    nom: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiPostePoste extends Struct.CollectionTypeSchema {
   collectionName: 'postes';
   info: {
@@ -584,8 +676,8 @@ export interface ApiPostePoste extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    bde_member: Schema.Attribute.Relation<
-      'manyToOne',
+    bde_members: Schema.Attribute.Relation<
+      'manyToMany',
       'api::bde-member.bde-member'
     >;
     color: Schema.Attribute.String &
@@ -911,8 +1003,8 @@ export interface PluginUploadFile extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
-    alternativeText: Schema.Attribute.String;
-    caption: Schema.Attribute.String;
+    alternativeText: Schema.Attribute.Text;
+    caption: Schema.Attribute.Text;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -936,7 +1028,7 @@ export interface PluginUploadFile extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     mime: Schema.Attribute.String & Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    previewUrl: Schema.Attribute.String;
+    previewUrl: Schema.Attribute.Text;
     provider: Schema.Attribute.String & Schema.Attribute.Required;
     provider_metadata: Schema.Attribute.JSON;
     publishedAt: Schema.Attribute.DateTime;
@@ -945,7 +1037,7 @@ export interface PluginUploadFile extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    url: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.Text & Schema.Attribute.Required;
     width: Schema.Attribute.Integer;
   };
 }
@@ -1160,6 +1252,7 @@ declare module '@strapi/strapi' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::permission': AdminPermission;
       'admin::role': AdminRole;
+      'admin::session': AdminSession;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
@@ -1168,6 +1261,7 @@ declare module '@strapi/strapi' {
       'api::event.event': ApiEventEvent;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::link.link': ApiLinkLink;
+      'api::mandat.mandat': ApiMandatMandat;
       'api::poste.poste': ApiPostePoste;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
