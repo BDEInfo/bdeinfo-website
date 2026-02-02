@@ -516,34 +516,17 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    archived: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.RichText;
-    distanciel: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     endDate: Schema.Attribute.DateTime;
     image: Schema.Attribute.Media<'images'>;
+    liens: Schema.Attribute.Component<'utils.link', true>;
+    lieu: Schema.Attribute.Component<'lieu-evenement.lieu', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
       Schema.Attribute.Private;
-    location: Schema.Attribute.String;
-    prixAdh: Schema.Attribute.Decimal &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<0>;
-    prixNAdh: Schema.Attribute.Decimal &
-      Schema.Attribute.SetMinMax<
-        {
-          min: 0;
-        },
-        number
-      > &
-      Schema.Attribute.DefaultTo<0>;
     publishedAt: Schema.Attribute.DateTime;
     startDate: Schema.Attribute.DateTime;
     tags: Schema.Attribute.Enumeration<

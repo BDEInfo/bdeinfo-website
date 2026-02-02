@@ -1,0 +1,228 @@
+@use '_variables' as *
+@use '_mixins' as *
+@use 'sass:color'
+
+.eventDetails
+    width: 100%
+    display: flex
+    flex-direction: column
+    gap: 1.5rem
+    overflow-x: hidden
+
+    // Bannière avec image
+    .banner
+        position: relative
+        width: 100%
+        margin: 0 0 0.5rem
+        height: 200px
+        overflow: hidden
+        border-radius: 10px
+
+        @include media-max($breakpoint-xs)
+            height: 150px
+
+        .bannerImage
+            width: 100%
+            height: 100%
+            object-fit: cover
+
+        .bannerOverlay
+            position: absolute
+            top: 0
+            left: 0
+            right: 0
+            bottom: 0
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%)
+            display: flex
+            align-items: flex-start
+            justify-content: space-between
+            padding: 1rem
+
+            .tag
+                background-color: $secondaryColor
+                color: white
+                font-size: 0.7rem
+                font-weight: 600
+                padding: 0.3em 0.8em
+                border-radius: 4px
+                text-transform: uppercase
+                letter-spacing: 0.5px
+
+            .statusBadge
+                color: white
+                font-size: 0.7rem
+                font-weight: 600
+                padding: 0.3em 0.8em
+                border-radius: 4px
+                display: flex
+                align-items: center
+                gap: 0.4rem
+
+                &.upcoming
+                    background-color: #4caf50
+
+                    i
+                        font-size: 0.6rem
+
+                &.ongoing
+                    background-color: #e53935
+
+                    i
+                        font-size: 0.5rem
+                        animation: blink 1s infinite
+
+                &.past
+                    background-color: #757575
+
+                @keyframes blink
+                    0%, 100%
+                        opacity: 1
+                    50%
+                        opacity: 0.3
+
+    // Cartes d'information principales
+    .mainInfo
+        display: grid
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr))
+        gap: 1rem
+        margin-top: 0.5rem
+
+        .infoCard
+            display: flex
+            align-items: center
+            gap: 0.75rem
+            padding: 1rem
+            background-color: color.adjust($backgroundColor, $whiteness: 3%)
+            border-radius: 10px
+            border-left: 3px solid $secondaryColor
+
+            > i
+                font-size: 1.2rem
+                color: $secondaryColor
+                width: 24px
+                text-align: center
+
+            > div
+                display: flex
+                flex-direction: column
+                gap: 0.2rem
+
+            .infoLabel
+                font-size: 0.75rem
+                color: color.adjust(white, $alpha: -0.5)
+                text-transform: uppercase
+                letter-spacing: 0.5px
+
+            .infoValue
+                font-size: 0.95rem
+                color: white
+                font-weight: 500
+
+    // Sections
+    .section
+        display: flex
+        flex-direction: column
+        gap: 0.75rem
+
+        .sectionTitle
+            display: flex
+            align-items: center
+            gap: 0.5rem
+            font-size: 1rem
+            font-weight: 600
+            color: white
+            padding-bottom: 0.5rem
+            border-bottom: 1px solid color.adjust(white, $alpha: -0.85)
+
+            i
+                color: $secondaryColor
+                font-size: 0.85rem
+                width: 20px
+                text-align: center
+
+        .description
+            color: color.adjust(white, $alpha: -0.2)
+            line-height: 1.7
+            font-size: 0.95rem
+
+    // Tarifs
+    .tarifs
+        display: grid
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
+        gap: 0.75rem
+
+        .tarif
+            background-color: color.adjust($backgroundColor, $whiteness: 3%)
+            padding: 1rem
+            border-radius: 10px
+            transition: transform 0.2s ease, box-shadow 0.2s ease
+
+            &:hover
+                transform: translateY(-2px)
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2)
+
+            .tarifHeader
+                display: flex
+                justify-content: space-between
+                align-items: center
+
+                .tarifName
+                    font-weight: 600
+                    color: white
+                    font-size: 0.95rem
+
+                .tarifPrice
+                    font-weight: 700
+                    color: $secondaryColor
+                    font-size: 1.1rem
+                    background-color: color.adjust($secondaryColor, $alpha: -0.85)
+                    padding: 0.2em 0.5em
+                    border-radius: 4px
+
+            .tarifDescription
+                margin-top: 0.5rem
+                color: color.adjust(white, $alpha: -0.4)
+                font-size: 0.85rem
+                line-height: 1.4
+
+    // Liens
+    .liens
+        display: flex
+        flex-direction: column
+        gap: 0.5rem
+
+        .lien
+            display: flex
+            align-items: center
+            gap: 0.75rem
+            padding: 0.85rem 1rem
+            background-color: color.adjust($backgroundColor, $whiteness: 3%)
+            border-radius: 8px
+            color: white
+            text-decoration: none
+            transition: all 0.2s ease
+            border: 1px solid transparent
+
+            &:hover
+                background-color: color.adjust($secondaryColor, $alpha: -0.85)
+                border-color: $secondaryColor
+                transform: translateX(4px)
+
+                > i:last-child
+                    opacity: 1
+                    transform: translateX(4px)
+
+            > i:first-child
+                color: $secondaryColor
+                width: 20px
+                text-align: center
+                font-size: 1rem
+
+            span
+                flex: 1
+                font-weight: 500
+
+            > i:last-child
+                opacity: 0.3
+                font-size: 0.8rem
+                transition: all 0.2s ease

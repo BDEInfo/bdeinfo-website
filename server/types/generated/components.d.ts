@@ -14,6 +14,20 @@ export interface CustomTypesAdherants extends Struct.ComponentSchema {
   };
 }
 
+export interface LieuEvenementLieu extends Struct.ComponentSchema {
+  collectionName: 'components_lieu_evenement_lieus';
+  info: {
+    displayName: 'lieu';
+    icon: 'pinMap';
+  };
+  attributes: {
+    distanciel: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    lieu: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface PrixEvenementTarif extends Struct.ComponentSchema {
   collectionName: 'components_prix_evenement_tarifs';
   info: {
@@ -37,6 +51,7 @@ export interface UtilsLink extends Struct.ComponentSchema {
     font_awesome_class_name: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'fas fa-link'>;
     open_new_page: Schema.Attribute.Boolean;
+    title: Schema.Attribute.String;
     url: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -45,6 +60,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'custom-types.adherants': CustomTypesAdherants;
+      'lieu-evenement.lieu': LieuEvenementLieu;
       'prix-evenement.tarif': PrixEvenementTarif;
       'utils.link': UtilsLink;
     }

@@ -1,9 +1,7 @@
 import About from '@template/About'
 import Default from '@layout/Default'
 
-import axios from '@util/axios'
-import { formatJSONResponse } from '@util/format'
-
+import strapi from '@util/strapi'
 import { fetchAdherents } from '@util/adherents'
 
 export default function App ({ links, bdeInformations, bdeMembers, adherents, mandats }) {
@@ -18,10 +16,18 @@ export default function App ({ links, bdeInformations, bdeMembers, adherents, ma
 export async function getStaticProps () {
 
     const [links, bdeInformations, bdeMembers, mandats] = await Promise.all([
-        axios('/link'),
-        axios('/bde-information', { params: { populate: ['logo', 'image', 'statuts', 'mandat_actuel'] } }),
-        axios('/bde-members', { params: { pagination: { pageSize: 50 }, populate: ['image', 'postes', 'mandat'] } }),
-        axios('/mandats', { params: { sort: 'annee:desc', populate: ['logo'] } })
+        strapi.single('link').find(),
+        strapi.single('bde-information').find({
+            populate: ['logo', 'image', 'statuts', 'mandat_actuel']
+        }),
+        strapi.collection('bde-members').find({
+            populate: ['image', 'postes', 'mandat'],
+            pagination: { pageSize: 50 }
+        }),
+        strapi.collection('mandats').find({
+            populate: ['logo'],
+            sort: 'annee:desc'
+        })
     ])
 
     // parse adherents google spreadsheet
@@ -29,11 +35,11 @@ export async function getStaticProps () {
     
     return {
         props: {
-            links: formatJSONResponse(links.data),
-            bdeInformations: formatJSONResponse(bdeInformations.data),
-            bdeMembers: formatJSONResponse(bdeMembers.data),
+            links: links.data,
+            bdeInformations: bdeInformations.data,
+            bdeMembers: bdeMembers.data,
             adherents,
-            mandats: formatJSONResponse(mandats.data)
+            mandats: mandats.data
         },
         revalidate: 20
     }

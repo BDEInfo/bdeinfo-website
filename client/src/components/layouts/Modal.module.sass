@@ -1,5 +1,5 @@
-@use '_variables' as *
-@use '_mixins' as *
+@use 'variables' as *
+@use 'mixins' as *
 @use 'sass:color'
 
 .modalOverlay
@@ -27,7 +27,7 @@
     .modal
 
         width: 50vw
-        height: 70vh
+        max-height: 85vh
 
         border-radius: 15px
         padding: 2rem
@@ -39,7 +39,8 @@
         align-items: center
 
         @include media-max($breakpoint-sm)
-            width: 80vw
+            width: 85vw
+            max-height: 90vh
 
         .modalHeader
 
@@ -79,5 +80,7 @@
         .modalBody
 
             padding-top: 10px
+            width: 100%
+            flex: 1
 
-            overflow-y: scroll
+            overflow-y: auto

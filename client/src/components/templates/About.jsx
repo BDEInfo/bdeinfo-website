@@ -9,7 +9,7 @@ import { getImage } from '@util/image'
 import apiURL from '@config/connection'
 import useWindowDimensions from '@hook/useWindowDimensions'
 
-import Tilt from 'react-tilt'
+import Tilt from 'react-parallax-tilt'
 import { useState, useEffect } from 'react'
 
 export default function About ({ bdeInformations, bdeMembers, adherents, mandats }) {

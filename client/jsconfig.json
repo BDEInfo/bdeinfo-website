@@ -11,7 +11,7 @@
             "@context/*": ["contexts/*"],
             "@hook/*": ["hooks/*"],
             "@util/*": ["utils/*"],
-            "@style/*": ["../public/styles/*"],
+            "@style/*": ["styles/*"],
             "@asset/*": ["../public/assets/*"]
         }
     },

@@ -10,6 +10,9 @@
       "type": "string",
       "required": true
     },
+    "title": {
+      "type": "string"
+    },
     "font_awesome_class_name": {
       "type": "string",
       "default": "fas fa-link",
