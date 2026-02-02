@@ -1,5 +1,4 @@
 import styles from './About.module.sass'
-import Modal from '@layout/Modal'
 import ModalCustomTitle from '@layout/ModalCustomTitle'
 import Adherents from '@module/Adherents/Adherents'
 import BDEMembers from '@module/BDEMembers/BDEMembers'
@@ -42,15 +41,12 @@ export default function About ({ bdeInformations, bdeMembers, adherents, mandats
         <div className={styles.aboutContainer}>
             { width > 768 ? 
             
-                <Tilt 
+                <Tilt
                     className={styles.tilt}
-                    options={{
-                        max: 10,
-                        reverse: true,
-                        perspective: 600,
-                        scale: 1.1,
-                        easing: "cubic-bezier(.1,.98,.52,.99)"
-                    }}
+                    tiltReverse={true}
+                    scale={1.1}
+                    transitionEasing={"cubic-bezier(.1,.98,.52,.99)"}
+                    perspective={500}
                     >
 
                     <div className={styles.informationsContainer}>

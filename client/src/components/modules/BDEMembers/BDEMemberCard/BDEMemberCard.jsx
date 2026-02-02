@@ -1,12 +1,17 @@
 import styles from './BDEMemberCard.module.sass'
 import { getImage } from '@util/image'
+import { useState } from 'react'
 
 export default function BDEMemberCard({ bdeMember }) {
+    const [flipped, setFlipped] = useState(false)
     const sortedPostes = Array.isArray(bdeMember.postes)
         ? [...bdeMember.postes].sort((a, b) => b.weight - a.weight)
         : [];
     return (
-        <li className={styles.memberCard}>
+        <li
+            className={`${styles.memberCard} ${flipped ? styles.flipped : ''}`}
+            onClick={() => setFlipped(!flipped)}
+        >
             <div className={styles.cardContentFront}>
                 <img className={styles.image}
                      src={getImage(bdeMember.image)}

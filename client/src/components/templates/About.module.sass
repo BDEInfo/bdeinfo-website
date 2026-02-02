@@ -3,26 +3,22 @@
 @use 'sass:color'
     
 .aboutContainer
-
     position: absolute
-    left: 45%
-    transform: translateX(-50%)
+    top: $navbarHeight
+    left: 0
+    width: 100vw
+    height: calc(100vh - $navbarHeight)
+
+    overflow-y: auto
+    overflow-x: hidden
+
     display: flex
     align-items: center
-    justify-content: space-around
-    height: 100vh
-    overflow-y: scroll
-    overflow-x: hidden
-    width: 75vw
+    justify-content: center
     text-align: center
 
-    &::-webkit-scrollbar
-        display: none
-
     @include media-max($breakpoint-sm)
-
-        margin-top: 20vh
-        width: 75vw
+        padding-top: 2rem
         flex-direction: column
         align-items: center
         justify-content: flex-start
@@ -33,6 +29,7 @@
         flex-direction: column
         align-items: center
         justify-content: center
+        transform-style: preserve-3d
 
     .informations
 
@@ -46,8 +43,10 @@
         justify-content: center
 
         opacity: 0
+        transform: translateZ(30px)
 
         transition: .2s linear
+
 
         @include media-max($breakpoint-sm)
             opacity: 1

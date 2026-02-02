@@ -5,7 +5,7 @@
   display: flex
   flex-direction: column
   align-items: center
-  transition: box-shadow .2s, transform .2s
+  transition: box-shadow .1s, transform .2s
   position: relative
   min-width: 280px
   min-height: 350px
@@ -13,15 +13,35 @@
   z-index: 1
   perspective: 1000px
   transform-style: preserve-3d
+  cursor: pointer
 
-  &:hover
-    box-shadow: 0 4px 24px rgba(0,0,0,0.25)
-    transform: translateY(-4px) scale(1.03)
+  @media (max-width: 768px)
+    flex-direction: row
+    min-width: 100%
+    max-width: 100%
+    min-height: auto
+    height: auto
+    margin: 0.5em 0
+    perspective: none
+    transform-style: flat
+    cursor: default
 
-    .cardContentFront
-      transform: rotateY(-180deg)
-    .cardContentBack
-      transform: rotateY(0deg)
+  @media (hover: hover)
+    &:hover
+      box-shadow: 0 4px 24px rgba(0,0,0,0.25)
+      transform: translateY(-4px) scale(1.03)
+
+      .cardContentFront
+        transform: rotateY(-180deg)
+      .cardContentBack
+        transform: rotateY(0deg)
+
+  &.flipped
+    @media (min-width: 769px)
+      .cardContentFront
+        transform: rotateY(-180deg)
+      .cardContentBack
+        transform: rotateY(0deg)
 
   .cardContentFront,
   .cardContentBack
@@ -30,7 +50,17 @@
     inset: 0
     box-sizing: border-box
     border-radius: 1.2em
-    transition: transform .3s ease-in-out
+    transition: transform .2s ease-in-out
+
+    @media (max-width: 768px)
+      position: relative
+      inset: auto
+      flex: 1
+      backface-visibility: visible
+      transform: none !important
+      min-height: 180px
+      min-width: 0
+      overflow: hidden
 
   .cardContentFront
     padding: 1.5em 1em
@@ -41,6 +71,10 @@
     transform: rotateY(0deg)
     background: #1d1d1d
 
+    @media (max-width: 768px)
+      padding: 1em 0.8em
+      border-radius: 1.2em 0 0 1.2em
+
     .image
       height: 8em
       width: 8em
@@ -50,6 +84,11 @@
       box-shadow: 0 1px 6px rgba(0,0,0,0.08)
       flex-shrink: 0
 
+      @media (max-width: 768px)
+        height: 4em
+        width: 4em
+        margin: 0 0 0.5rem 0
+
     .name
       font-size: 1.2em
       font-weight: 600
@@ -57,12 +96,28 @@
       text-align: center
       margin: .5em 0
       line-height: 1.3
+      overflow: hidden
+      text-overflow: ellipsis
+      width: 100%
+      padding: 0 0.5em
+      box-sizing: border-box
       word-wrap: break-word
+      overflow-wrap: break-word
+      display: -webkit-box
+      -webkit-line-clamp: 2
+      -webkit-box-orient: vertical
+
+      @media (max-width: 768px)
+        font-size: 0.85em
+        margin: 0.3em 0
 
     .role
       margin-top: .5em
       display: flex
       justify-content: center
+
+      @media (max-width: 768px)
+        margin-top: 0.3em
 
   .cardContentBack
     padding: 1.2em 1em 1em
@@ -73,6 +128,11 @@
     transform: rotateY(180deg)
     background: #4c2a00
 
+    @media (max-width: 768px)
+      padding: 1em 0.8em
+      border-radius: 0 1.2em 1.2em 0
+      transform: none
+
     .name
       font-size: 1.1em
       font-weight: 600
@@ -80,17 +140,36 @@
       text-align: center
       margin-bottom: .8em
       line-height: 1.2
+      overflow: hidden
+      text-overflow: ellipsis
+      width: 100%
+      padding: 0 0.5em
+      box-sizing: border-box
       word-wrap: break-word
+      overflow-wrap: break-word
+      display: -webkit-box
+      -webkit-line-clamp: 2
+      -webkit-box-orient: vertical
+
+      @media (max-width: 768px)
+        font-size: 0.8em
+        margin-bottom: 0.4em
 
     .link
       margin: .5em 0
       flex-shrink: 0
+
+      @media (max-width: 768px)
+        margin: 0.3em 0
 
       a
         color: #fff
         font-size: 1.5em
         transition: color .2s, transform .2s
         display: inline-block
+
+        @media (max-width: 768px)
+          font-size: 1.2em
 
         &:hover
           color: #3498db
@@ -112,6 +191,12 @@
       -webkit-box-orient: vertical
       flex-shrink: 0
 
+      @media (max-width: 768px)
+        font-size: 0.7em
+        margin: 0.3em 0
+        -webkit-line-clamp: 2
+        max-height: 2.6em
+
     .roles
       display: flex
       flex-direction: column
@@ -123,6 +208,11 @@
       overflow-y: auto
       min-height: 0
       padding-bottom: .5em
+
+      @media (max-width: 768px)
+        gap: 0.2em
+        margin-top: 0.3em
+        padding-bottom: 0.3em
 
       &::-webkit-scrollbar
         width: 4px
@@ -157,6 +247,12 @@
   text-align: center
   box-sizing: border-box
   cursor: help
+
+  @media (max-width: 768px)
+    max-width: 130px
+    padding: 0.25em 0.5em
+    font-size: 0.65em
+    margin-bottom: 0.15em
 
   &:hover
     transform: translateY(-1px)

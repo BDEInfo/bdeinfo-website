@@ -57,6 +57,9 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "address": {
+      "type": "string"
     }
   }
 }
