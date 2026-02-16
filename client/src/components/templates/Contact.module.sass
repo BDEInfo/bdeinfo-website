@@ -137,6 +137,53 @@
     &:hover
         color: $secondaryColor
 
+.contactEmailWrapper
+    display: flex
+    align-items: center
+    gap: 0.5rem
+
+.copyBtn
+    background: rgba(255, 255, 255, 0.05)
+    border: 1px solid rgba(255, 255, 255, 0.1)
+    color: color.adjust($secondaryColor, $whiteness: 30%)
+    padding: 0.25rem 0.4rem
+    border-radius: 4px
+    cursor: pointer
+    transition: all 0.2s ease
+    display: flex
+    align-items: center
+    justify-content: center
+    min-width: 24px
+    height: 24px
+
+    @include media-max($breakpoint-sm)
+        min-width: 22px
+        height: 22px
+        padding: 0.2rem 0.35rem
+
+    i
+        font-size: 0.7rem
+        width: auto
+        min-width: auto
+        color: inherit
+
+    &:hover
+        background: rgba(255, 255, 255, 0.1)
+        border-color: $secondaryColor
+        color: $secondaryColor
+        transform: translateY(-1px)
+
+    &:active
+        transform: translateY(0)
+
+    &.copied
+        background: rgba(46, 204, 113, 0.2)
+        border-color: #2ecc71
+        color: #2ecc71
+
+        &:hover
+            background: rgba(46, 204, 113, 0.3)
+
 .formSection
     flex: 1
     @include glassCard(0.1)

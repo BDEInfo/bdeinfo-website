@@ -12,10 +12,9 @@ export default function Default ({ children, links }) {
             </div>
         </div>
 
-        <div id="cursorCircle"></div>
+        <div id="cursorCircle" suppressHydrationWarning></div>
 
-        <Script src="/scripts/circleCursor.js" strategy="beforeInteractive" />
-        <Script 
+        <Script
             src="/scripts/circleCursor.js"
             strategy="afterInteractive"
         />

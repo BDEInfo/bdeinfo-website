@@ -11,6 +11,17 @@ export default function Contact ({ contactInfo, bdeInfo }) {
     })
     const [status, setStatus] = useState({ type: '', message: '' })
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [copiedItem, setCopiedItem] = useState(null)
+
+    const handleCopy = async (text, itemName) => {
+        try {
+            await navigator.clipboard.writeText(text)
+            setCopiedItem(itemName)
+            setTimeout(() => setCopiedItem(null), 2000)
+        } catch (err) {
+            console.error('Erreur lors de la copie:', err)
+        }
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -64,23 +75,51 @@ export default function Contact ({ contactInfo, bdeInfo }) {
                         <div className={styles.infoItem}>
                             <i className="fas fa-envelope"></i>
                             <a href={`mailto:${bdeInfo.email}`}>{bdeInfo.email}</a>
+                            <button
+                                className={`${styles.copyBtn} ${copiedItem === 'bde-email' ? styles.copied : ''}`}
+                                onClick={() => handleCopy(bdeInfo.email, 'bde-email')}
+                                title="Copier l'email"
+                            >
+                                <i className={copiedItem === 'bde-email' ? 'fas fa-check' : 'fas fa-copy'}></i>
+                            </button>
                         </div>
                         {bdeInfo.phone && (
                             <div className={styles.infoItem}>
                                 <i className="fas fa-phone"></i>
                                 <span>{bdeInfo.phone}</span>
+                                <button
+                                    className={`${styles.copyBtn} ${copiedItem === 'bde-phone' ? styles.copied : ''}`}
+                                    onClick={() => handleCopy(bdeInfo.phone, 'bde-phone')}
+                                    title="Copier le téléphone"
+                                >
+                                    <i className={copiedItem === 'bde-phone' ? 'fas fa-check' : 'fas fa-copy'}></i>
+                                </button>
                             </div>
                         )}
                         {bdeInfo.location && (
                             <div className={styles.infoItem}>
                                 <i className="fas fa-map-marker-alt"></i>
                                 <span>{bdeInfo.location}</span>
+                                <button
+                                    className={`${styles.copyBtn} ${copiedItem === 'bde-location' ? styles.copied : ''}`}
+                                    onClick={() => handleCopy(bdeInfo.location, 'bde-location')}
+                                    title="Copier la localisation"
+                                >
+                                    <i className={copiedItem === 'bde-location' ? 'fas fa-check' : 'fas fa-copy'}></i>
+                                </button>
                             </div>
                         )}
                         {bdeInfo.address && (
                             <div className={styles.infoItem}>
                                 <i className="fas fa-building"></i>
                                 <span>{bdeInfo.address}</span>
+                                <button
+                                    className={`${styles.copyBtn} ${copiedItem === 'bde-address' ? styles.copied : ''}`}
+                                    onClick={() => handleCopy(bdeInfo.address, 'bde-address')}
+                                    title="Copier l'adresse"
+                                >
+                                    <i className={copiedItem === 'bde-address' ? 'fas fa-check' : 'fas fa-copy'}></i>
+                                </button>
                             </div>
                         )}
                     </div>
@@ -91,9 +130,18 @@ export default function Contact ({ contactInfo, bdeInfo }) {
                             {contactInfo.map((contact, index) => (
                                 <div key={index} className={styles.contactItem}>
                                     <span className={styles.contactName}>{contact.name}</span>
-                                    <a href={`mailto:${contact.email}`} className={styles.contactEmail}>
-                                        {contact.email}
-                                    </a>
+                                    <div className={styles.contactEmailWrapper}>
+                                        <a href={`mailto:${contact.email}`} className={styles.contactEmail}>
+                                            {contact.email}
+                                        </a>
+                                        <button
+                                            className={`${styles.copyBtn} ${copiedItem === `contact-${index}` ? styles.copied : ''}`}
+                                            onClick={() => handleCopy(contact.email, `contact-${index}`)}
+                                            title="Copier l'email"
+                                        >
+                                            <i className={copiedItem === `contact-${index}` ? 'fas fa-check' : 'fas fa-copy'}></i>
+                                        </button>
+                                    </div>
                                 </div>
                             ))}
                         </div>

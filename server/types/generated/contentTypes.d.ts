@@ -444,10 +444,11 @@ export interface ApiBdeInformationBdeInformation
   };
   attributes: {
     address: Schema.Attribute.String;
+    cards: Schema.Attribute.Component<'custom-types.description-card', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.RichText & Schema.Attribute.Required;
+    description_short: Schema.Attribute.RichText & Schema.Attribute.Required;
     email: Schema.Attribute.Email &
       Schema.Attribute.DefaultTo<'contact@bdeinfo.org'>;
     image: Schema.Attribute.Media<'images'>;

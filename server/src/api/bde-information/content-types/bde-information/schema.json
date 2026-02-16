@@ -12,10 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "description": {
-      "type": "richtext",
-      "required": true
-    },
     "email": {
       "type": "email",
       "required": false,
@@ -60,6 +56,15 @@
     },
     "address": {
       "type": "string"
+    },
+    "description_short": {
+      "type": "richtext",
+      "required": true
+    },
+    "cards": {
+      "type": "component",
+      "component": "custom-types.description-card",
+      "repeatable": true
     }
   }
 }

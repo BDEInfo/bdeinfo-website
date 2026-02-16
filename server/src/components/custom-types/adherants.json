@@ -29,7 +29,7 @@
       },
       "required": true
     },
-    "google_doc_link": {
+    "google_sheet_id": {
       "type": "string",
       "conditions": {
         "visible": {

@@ -6,17 +6,19 @@ import MandatDropdown from '@module/MandatDropdown/MandatDropdown'
 
 import { getImage } from '@util/image'
 import apiURL from '@config/connection'
-import useWindowDimensions from '@hook/useWindowDimensions'
 
-import Tilt from 'react-parallax-tilt'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 
-export default function About ({ bdeInformations, bdeMembers, adherents, mandats }) {
+const isFontAwesomeClass = (value) => typeof value === 'string' && value.trim().includes('fa-')
+
+export default function About ({ bdeInformations, bdeMembers, adherents, adherentsConfig, mandats }) {
 
     const [membersModal, setMembersModal] = useState(false)
     const [adherentsModal, setAdherentsModal] = useState(false)
     const [selectedMandat, setSelectedMandat] = useState(null)
-    const [ width, height ] = useWindowDimensions()
+
+    // Vérifier si les adhérents sont activés
+    const adherentsEnabled = adherentsConfig?.type !== 'none'
 
     // Initialiser le mandat sélectionné avec le mandat actuel du BDE
     useEffect(() => {
@@ -29,76 +31,67 @@ export default function About ({ bdeInformations, bdeMembers, adherents, mandats
                 setSelectedMandat(mandats[0])
             }
         }
-    }, [mandats, bdeInformations])
+    }, [mandats, bdeInformations, selectedMandat])
 
     // Filtrer les membres par mandat sélectionné
     const filteredMembers = selectedMandat
         ? bdeMembers.filter(member => member.mandat?.id === selectedMandat.id)
         : bdeMembers
 
-    return (<>
+    const mandatLabel = selectedMandat?.annee || bdeInformations?.mandat_actuel?.annee
 
+    const cards = useMemo(() => bdeInformations?.cards || [], [bdeInformations])
+    const descriptionShort = bdeInformations?.description_short || ''
+
+    const logoValue = bdeInformations?.logo
+    const logoIsIcon = isFontAwesomeClass(logoValue)
+
+    return (
         <div className={styles.aboutContainer}>
-            { width > 768 ? 
-            
-                <Tilt
-                    className={styles.tilt}
-                    tiltReverse={true}
-                    scale={1.1}
-                    transitionEasing={"cubic-bezier(.1,.98,.52,.99)"}
-                    perspective={500}
-                    >
-
-                    <div className={styles.informationsContainer}>
-                        <div className={styles.informations}>
-                                <img className={styles.logo} src={getImage(bdeInformations.logo, 'thumbnail')}/>
-                                <div className={styles.subInformations}>
-                                    <div className={styles.email}>{bdeInformations.email}</div>
-                                    <div className={styles.phone}>{bdeInformations.phone}</div>
-                                    <div className={styles.location}>{bdeInformations.location}</div>
-                                </div>
-                                <div className={styles.description}>{bdeInformations.description}</div>
-
-                        </div>
-                        <img className={styles.image} src={getImage(bdeInformations.image, 'large')}/>
+            <section className={styles.hero}>
+                <div className={styles.heroContent}>
+                    <div className={styles.logoWrap}>
+                        {logoIsIcon
+                            ? <div className={styles.logoIcon} aria-hidden={true}><i className={logoValue}></i></div>
+                            : <img className={styles.logo} src={getImage(logoValue, 'thumbnail')} alt="Logo BDE Info" />
+                        }
+                        {mandatLabel && <span className={styles.mandatChip}>Mandat {mandatLabel}</span>}
                     </div>
-
-                </Tilt>
-            
-                :
-
-                <div className={styles.informationsContainer}>
-                    <div className={styles.informations}>
-                            <img className={styles.logo} src={getImage(bdeInformations.logo, 'thumbnail')}/>
-                            <div className={styles.subInformations}>
-                                <div className={styles.email}>{bdeInformations.email}</div>
-                                <div className={styles.phone}>{bdeInformations.phone}</div>
-                                <div className={styles.location}>{bdeInformations.location}</div>
-                            </div>
-                            <div className={styles.description}>{bdeInformations.description}</div>
-
+                    <h1 className={styles.title}>BDE Info</h1>
+                    <div className={styles.lead} dangerouslySetInnerHTML={{ __html: descriptionShort }} />
+                    <div className={styles.actions}>
+                        <button className={styles.primaryAction} onClick={() => setMembersModal(true)}>
+                            Découvrir l'équipe
+                        </button>
+                        <button className={styles.secondaryAction} onClick={() => setAdherentsModal(true)}>
+                            Voir les adhérents
+                        </button>
+                        <a className={styles.ghostAction} href={`${apiURL}${bdeInformations.statuts.url}`} target="_blank" rel="noreferrer">
+                            Statuts du BDE
+                        </a>
                     </div>
-                    <img className={styles.image} src={getImage(bdeInformations.image, 'large')}/>
                 </div>
 
-            
-            
-            }
-            
+                <div className={styles.heroVisual}>
+                    <div className={styles.visualCard}>
+                        <img className={styles.image} src={getImage(bdeInformations.image, 'large')} alt="Illustration BDE" />
+                    </div>
+                </div>
+            </section>
 
-            <div className={styles.separator} />
-
-            <div className={styles.interactions}>
-                <a className={`${styles.members} circleHover`} onClick={() => setMembersModal(true)}>
-                    <div className={`${styles.text} circleHover`}>Membres <i className="circleHover fas fa-users"></i></div>
-                </a>
-                <a className={`${styles.status} circleHover`} href={`${apiURL}${bdeInformations.statuts.url}`} target="_blank">
-                    <div className={`${styles.text} circleHover`}>Statuts <i className="circleHover fas fa-book"></i></div>
-                </a>
-                <a className={`${styles.adherents} circleHover`} onClick={() => setAdherentsModal(true)}>
-                    <div className={`${styles.text} circleHover`}>Adhérents <i className="circleHover fas fa-users"></i></div>
-                </a>
-            </div>
+            {cards.length > 0 && (
+                <section className={styles.blocks}>
+                    {cards.map(card => (
+                        <div key={card.id || card.title} className={styles.blockCard}>
+                            <div className={styles.blockHeader}>
+                                {card.icon && <span className={styles.blockIcon}><i className={card.icon}></i></span>}
+                                <div className={styles.blockTitle}>{card.title}</div>
+                            </div>
+                            <div className={styles.blockText} dangerouslySetInnerHTML={{ __html: card.content }} />
+                        </div>
+                    ))}
+                </section>
+            )}
 
             <ModalCustomTitle
                 onClose={() => setMembersModal(false)}
@@ -116,26 +109,23 @@ export default function About ({ bdeInformations, bdeMembers, adherents, mandats
                 <BDEMembers bdeMembers={filteredMembers}/>
             </ModalCustomTitle>
 
-            <ModalCustomTitle
-                onClose={() => setAdherentsModal(false)}
-                show={adherentsModal}
-                title="Adhérents"
-                titleComponent={
-                    <MandatDropdown
-                        mandats={mandats}
-                        selectedMandat={selectedMandat}
-                        onMandatChange={setSelectedMandat}
-                        mandatActuelId={bdeInformations?.mandat_actuel?.id}
-                    />
-                }
-            >
-                <Adherents adherents={adherents}/>
-            </ModalCustomTitle>
-
-
-
+            {adherentsEnabled && (
+                <ModalCustomTitle
+                    onClose={() => setAdherentsModal(false)}
+                    show={adherentsModal}
+                    title="Adhérents"
+                    titleComponent={
+                        <MandatDropdown
+                            mandats={mandats}
+                            selectedMandat={selectedMandat}
+                            onMandatChange={setSelectedMandat}
+                            mandatActuelId={bdeInformations?.mandat_actuel?.id}
+                        />
+                    }
+                >
+                    <Adherents adherents={adherents}/>
+                </ModalCustomTitle>
+            )}
         </div>
-
-        
-    </>)
+    )
 }

@@ -21,11 +21,9 @@ export default function BDEMember ({ bdeMembers }) {
     return (
         <ul className={styles.members}>
             {sortBDEMembers(bdeMembers).map(bdeMember =>
-                <BDEMemberCard bdeMember={bdeMember} />
+                // key on id for stable rendering
+                <BDEMemberCard key={bdeMember.id} bdeMember={bdeMember} />
             )}
         </ul>
     );
 }
-
-
-

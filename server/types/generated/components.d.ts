@@ -7,10 +7,23 @@ export interface CustomTypesAdherants extends Struct.ComponentSchema {
     icon: 'alien';
   };
   attributes: {
-    google_doc_link: Schema.Attribute.String & Schema.Attribute.Required;
+    google_sheet_id: Schema.Attribute.String & Schema.Attribute.Required;
     json_data: Schema.Attribute.JSON & Schema.Attribute.Required;
     type: Schema.Attribute.Enumeration<['none', 'json', 'google_docs']> &
       Schema.Attribute.Required;
+  };
+}
+
+export interface CustomTypesDescriptionCard extends Struct.ComponentSchema {
+  collectionName: 'components_custom_types_description_cards';
+  info: {
+    displayName: 'Description Card';
+    icon: 'dashboard';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText & Schema.Attribute.Required;
+    icon: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -60,6 +73,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'custom-types.adherants': CustomTypesAdherants;
+      'custom-types.description-card': CustomTypesDescriptionCard;
       'lieu-evenement.lieu': LieuEvenementLieu;
       'prix-evenement.tarif': PrixEvenementTarif;
       'utils.link': UtilsLink;
