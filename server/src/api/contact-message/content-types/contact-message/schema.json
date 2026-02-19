@@ -16,7 +16,7 @@
       "required": true
     },
     "mail": {
-      "type": "string",
+      "type": "email",
       "required": true
     },
     "subject": {
