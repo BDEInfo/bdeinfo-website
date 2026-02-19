@@ -1,2 +1,7 @@
 .idea/
 server/.strapi/client/
+
+# Never commit real env files
+.env
+.env.local
+.env.*.local
