@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "all": "next build && next start",
-    "lint": "next lint"
+    "lint": "stylelint \"src/**/*.{sass,scss}\""
   },
   "author": "Bartholomé",
   "contributors": [
