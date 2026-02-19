@@ -1,28 +1,164 @@
-name: Remote SSH
+name: CI-CD
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
+  push:
+    branches: [ main ]
   workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Image tag to deploy (e.g. commit SHA or main)"
+        required: true
+        default: main
+
+env:
+  REGISTRY: ghcr.io
+  CLIENT_IMAGE_NAME: ${{ github.repository_owner }}/bdeinfo-website-client
+  SERVER_IMAGE_NAME: ${{ github.repository_owner }}/bdeinfo-website-server
 
 jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            client/package-lock.json
+            server/package-lock.json
+
+      - name: Install client dependencies
+        working-directory: client
+        run: npm ci --no-audit --no-fund
+
+      - name: Build client
+        working-directory: client
+        run: npm run build
+
+      - name: Install server dependencies
+        working-directory: server
+        run: npm ci --no-audit --no-fund
+
+      - name: Build server
+        working-directory: server
+        run: npm run build
+
+  build:
+    name: Build and push images
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name != 'workflow_dispatch'
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Build and push client image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./client
+          file: ./client/.docker/Dockerfile
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.CLIENT_IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ env.CLIENT_IMAGE_NAME }}:main
+
+      - name: Build and push server image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./server
+          file: ./server/.docker/Dockerfile
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }}:main
 
   deploy:
-    name: Deploy
+    name: Deploy to VPS
     runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: read
+      packages: read
+    environment: production
     steps:
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@master
+      - name: Deploy over SSH using Docker CLI
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          # Registry / deploy infrastructure
+          GHCR_USER: ${{ github.actor }}
+          GHCR_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          CLIENT_IMAGE: ${{ env.REGISTRY }}/${{ env.CLIENT_IMAGE_NAME }}:${{ inputs.image_tag }}
+          SERVER_IMAGE: ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }}:${{ inputs.image_tag }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          # Client env vars
+          GOOGLE_SERVICE_ACCOUNT_EMAIL: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_EMAIL }}
+          GOOGLE_PRIVATE_KEY: ${{ secrets.GOOGLE_PRIVATE_KEY }}
+          # Server env vars (Strapi)
+          APP_KEYS: ${{ secrets.APP_KEYS }}
+          API_TOKEN_SALT: ${{ secrets.API_TOKEN_SALT }}
+          TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
+          ADMIN_JWT_SECRET: ${{ secrets.ADMIN_JWT_SECRET }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          ADMIN_MAX_REFRESH_TOKEN_LIFESPAN: ${{ secrets.ADMIN_MAX_REFRESH_TOKEN_LIFESPAN }}
+          ADMIN_MAX_SESSION_LIFESPAN: ${{ secrets.ADMIN_MAX_SESSION_LIFESPAN }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         with:
           host: ${{ secrets.IP }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
+          envs: GHCR_USER,GHCR_TOKEN,GITHUB_REPOSITORY,CLIENT_IMAGE,SERVER_IMAGE,DEPLOY_PATH,GOOGLE_SERVICE_ACCOUNT_EMAIL,GOOGLE_PRIVATE_KEY,APP_KEYS,API_TOKEN_SALT,TRANSFER_TOKEN_SALT,ADMIN_JWT_SECRET,JWT_SECRET,ADMIN_MAX_REFRESH_TOKEN_LIFESPAN,ADMIN_MAX_SESSION_LIFESPAN,DISCORD_WEBHOOK_URL
           script: |
-            cd /home/docker/nginx/bdeinfo-website
-            git pull origin main
-            docker-compose up -d --build
+            set -e
+            DEPLOY_DIR="${DEPLOY_PATH:-/opt/bdeinfo-website}"
+            if [ ! -d "$DEPLOY_DIR/.git" ]; then
+              mkdir -p "$DEPLOY_DIR"
+              git clone --branch main --single-branch "https://github.com/${GITHUB_REPOSITORY}.git" "$DEPLOY_DIR"
+            fi
+            cd "$DEPLOY_DIR"
+            git fetch --all --prune
+            git checkout main
+            git reset --hard origin/main
+            docker network create proxy || true
+            echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
+            CLIENT_IMAGE="$CLIENT_IMAGE" SERVER_IMAGE="$SERVER_IMAGE" \
+            GOOGLE_SERVICE_ACCOUNT_EMAIL="$GOOGLE_SERVICE_ACCOUNT_EMAIL" \
+            GOOGLE_PRIVATE_KEY="$GOOGLE_PRIVATE_KEY" \
+            APP_KEYS="$APP_KEYS" API_TOKEN_SALT="$API_TOKEN_SALT" TRANSFER_TOKEN_SALT="$TRANSFER_TOKEN_SALT" \
+            ADMIN_JWT_SECRET="$ADMIN_JWT_SECRET" JWT_SECRET="$JWT_SECRET" \
+            ADMIN_MAX_REFRESH_TOKEN_LIFESPAN="$ADMIN_MAX_REFRESH_TOKEN_LIFESPAN" \
+            ADMIN_MAX_SESSION_LIFESPAN="$ADMIN_MAX_SESSION_LIFESPAN" \
+            DISCORD_WEBHOOK_URL="$DISCORD_WEBHOOK_URL" \
+            docker compose -f docker-compose.prod.yml pull bdeinfo-client bdeinfo-server
+
+            CLIENT_IMAGE="$CLIENT_IMAGE" SERVER_IMAGE="$SERVER_IMAGE" \
+            GOOGLE_SERVICE_ACCOUNT_EMAIL="$GOOGLE_SERVICE_ACCOUNT_EMAIL" \
+            GOOGLE_PRIVATE_KEY="$GOOGLE_PRIVATE_KEY" \
+            APP_KEYS="$APP_KEYS" API_TOKEN_SALT="$API_TOKEN_SALT" TRANSFER_TOKEN_SALT="$TRANSFER_TOKEN_SALT" \
+            ADMIN_JWT_SECRET="$ADMIN_JWT_SECRET" JWT_SECRET="$JWT_SECRET" \
+            ADMIN_MAX_REFRESH_TOKEN_LIFESPAN="$ADMIN_MAX_REFRESH_TOKEN_LIFESPAN" \
+            ADMIN_MAX_SESSION_LIFESPAN="$ADMIN_MAX_SESSION_LIFESPAN" \
+            DISCORD_WEBHOOK_URL="$DISCORD_WEBHOOK_URL" \
+            docker compose -f docker-compose.prod.yml up -d --no-build --remove-orphans

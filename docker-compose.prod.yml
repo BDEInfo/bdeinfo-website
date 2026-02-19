@@ -1,0 +1,73 @@
+services:
+
+  bdeinfo-client:
+    container_name: bdeinfo-client
+    image: ${CLIENT_IMAGE:?CLIENT_IMAGE is required}
+    restart: unless-stopped
+    depends_on:
+      - bdeinfo-server
+    networks:
+      - proxy
+    environment:
+      NODE_ENV: production
+      API_URL: http://bdeinfo-server:1337
+      GOOGLE_SERVICE_ACCOUNT_EMAIL: ${GOOGLE_SERVICE_ACCOUNT_EMAIL:-}
+      GOOGLE_PRIVATE_KEY: ${GOOGLE_PRIVATE_KEY:-}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bdeinfo-client-http.rule=Host(`bdeinfo.org`) || Host(`www.bdeinfo.org`)"
+      - "traefik.http.routers.bdeinfo-client-http.entrypoints=web"
+      - "traefik.http.routers.bdeinfo-client-http.middlewares=client-https-redirect"
+      - "traefik.http.middlewares.client-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.client-https-redirect.redirectscheme.permanent=true"
+      - "traefik.http.routers.bdeinfo-client.rule=Host(`bdeinfo.org`) || Host(`www.bdeinfo.org`)"
+      - "traefik.http.routers.bdeinfo-client.entrypoints=websecure"
+      - "traefik.http.routers.bdeinfo-client.tls=true"
+      - "traefik.http.routers.bdeinfo-client.tls.certresolver=cloudflare"
+      - "traefik.http.services.bdeinfo-client.loadbalancer.server.port=3000"
+
+  bdeinfo-server:
+    container_name: bdeinfo-server
+    image: ${SERVER_IMAGE:?SERVER_IMAGE is required}
+    restart: unless-stopped
+    networks:
+      - proxy
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 1337
+      PUBLIC_URL: https://strapi.bdeinfo.org
+      APP_KEYS: ${APP_KEYS:?APP_KEYS is required}
+      API_TOKEN_SALT: ${API_TOKEN_SALT:?API_TOKEN_SALT is required}
+      TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT:?TRANSFER_TOKEN_SALT is required}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET:?ADMIN_JWT_SECRET is required}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
+      ADMIN_MAX_REFRESH_TOKEN_LIFESPAN: ${ADMIN_MAX_REFRESH_TOKEN_LIFESPAN:-2592000}
+      ADMIN_MAX_SESSION_LIFESPAN: ${ADMIN_MAX_SESSION_LIFESPAN:-604800}
+      DATABASE_CLIENT: sqlite
+      DATABASE_FILENAME: ./database/data.db
+      DISCORD_WEBHOOK_URL: ${DISCORD_WEBHOOK_URL:-}
+    volumes:
+      - bdeinfo_server_database:/app/database/
+      - bdeinfo_server_uploads:/app/public/uploads/
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bdeinfo-server-http.rule=Host(`strapi.bdeinfo.org`)"
+      - "traefik.http.routers.bdeinfo-server-http.entrypoints=web"
+      - "traefik.http.routers.bdeinfo-server-http.middlewares=server-https-redirect"
+      - "traefik.http.middlewares.server-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.server-https-redirect.redirectscheme.permanent=true"
+      - "traefik.http.routers.bdeinfo-server.rule=Host(`strapi.bdeinfo.org`)"
+      - "traefik.http.routers.bdeinfo-server.entrypoints=websecure"
+      - "traefik.http.routers.bdeinfo-server.tls=true"
+      - "traefik.http.routers.bdeinfo-server.tls.certresolver=cloudflare"
+      - "traefik.http.services.bdeinfo-server.loadbalancer.server.port=1337"
+
+networks:
+  proxy:
+    external: true
+    name: proxy
+
+volumes:
+  bdeinfo_server_database:
+  bdeinfo_server_uploads:
