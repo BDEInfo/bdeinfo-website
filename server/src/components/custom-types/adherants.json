@@ -1,0 +1,48 @@
+{
+  "collectionName": "components_custom_types_adherants",
+  "info": {
+    "displayName": "adherants",
+    "icon": "alien"
+  },
+  "options": {},
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "none",
+        "json",
+        "google_docs"
+      ]
+    },
+    "json_data": {
+      "type": "json",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "type"
+            },
+            "json"
+          ]
+        }
+      },
+      "required": true
+    },
+    "google_sheet_id": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "type"
+            },
+            "google_docs"
+          ]
+        }
+      },
+      "required": true
+    }
+  },
+  "config": {}
+}

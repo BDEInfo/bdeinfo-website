@@ -1,8 +1,7 @@
 import Events from '@template/Events'
 import Default from '@layout/Default'
 
-import axios from '@util/axios'
-import { formatJSONResponse } from '@util/format'
+import strapi from '@util/strapi'
 
 export default function App ({ links, events }) {
 
@@ -15,22 +14,23 @@ export default function App ({ links, events }) {
 
 export async function getStaticProps () {
 
-    const [links, events] = await Promise.all([
-        axios('/link'),
-        axios('/events', {
-            params: {
-                'sort': 'startDate:DESC',
-                'pagination[pageSize]': 50,
-                'filters[archived][$eq]': false
-            }
+    const [linksResult, eventsResult] = await Promise.allSettled([
+        strapi.single('link').find(),
+        strapi.collection('events').find({
+            populate: ['image', 'tarifs', 'lieu', 'liens'],
+            sort: 'startDate:DESC',
+            pagination: { pageSize: 50 }
         })
     ])
 
+    const links = linksResult.status === 'fulfilled' ? linksResult.value.data : {}
+    const events = eventsResult.status === 'fulfilled' ? eventsResult.value.data : []
+
     return {
         props: {
-            links: formatJSONResponse(links.data),
-            events: formatJSONResponse(events.data)
+            links,
+            events
         },
-        revalidate: 20
+        revalidate: 120
     }
 }

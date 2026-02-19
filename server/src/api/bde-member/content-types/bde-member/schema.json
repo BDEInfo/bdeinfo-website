@@ -12,13 +12,18 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "firstName": {
+    "name": {
       "type": "string",
       "required": true
     },
-    "lastName": {
-      "type": "string",
-      "required": true
+    "description": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "linkedin": {
+      "type": "string"
     },
     "image": {
       "type": "media",
@@ -28,10 +33,16 @@
         "images"
       ]
     },
-    "poste": {
+    "postes": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::poste.poste"
+      "relation": "manyToMany",
+      "target": "api::poste.poste",
+      "mappedBy": "bde_members"
+    },
+    "mandat": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::mandat.mandat"
     }
   }
 }

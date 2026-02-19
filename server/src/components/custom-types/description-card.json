@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_custom_types_description_cards",
+  "info": {
+    "displayName": "Description Card",
+    "icon": "dashboard"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "icon": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    }
+  },
+  "config": {}
+}

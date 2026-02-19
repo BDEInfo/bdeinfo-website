@@ -1,7 +1,6 @@
 import HomePage from '@template/HomePage'
 import Default from '@layout/Default'
-import axios from '@util/axios'
-import { formatJSONResponse } from '@util/format'
+import strapi from '@util/strapi'
 
 export default function App ({ links, homePage, events }) {
     
@@ -12,24 +11,27 @@ export default function App ({ links, homePage, events }) {
     </>)
 }
 
-export async function getServerSideProps (ctx) {
+export async function getStaticProps () {
 
-    const [links, homePage, events] = await Promise.all([
-        axios('/link'),
-        axios('/home-page'),
-        axios('/events', {
-            params: {
-                'sort': 'startDate:DESC',
-                'pagination[limit]': 3 
-            }
+    const [linksResult, homePageResult, eventsResult] = await Promise.allSettled([
+        strapi.single('link').find(),
+        strapi.single('home-page').find(),
+        strapi.collection('events').find({
+            sort: 'startDate:DESC',
+            pagination: { limit: 3 }
         })
     ])
 
+    const links = linksResult.status === 'fulfilled' ? linksResult.value.data : {}
+    const homePage = homePageResult.status === 'fulfilled' ? homePageResult.value.data : {}
+    const events = eventsResult.status === 'fulfilled' ? eventsResult.value.data : []
+
     return {
         props: {
-            links: formatJSONResponse(links.data),
-            homePage: formatJSONResponse(homePage.data),
-            events: formatJSONResponse(events.data)
-        }
+            links,
+            homePage,
+            events
+        },
+        revalidate: 120
     }
 }

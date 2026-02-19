@@ -1,0 +1,13 @@
+node_modules
+build
+.cache
+.git
+.gitignore
+Dockerfile
+.docker
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env*
+README.md
+database/

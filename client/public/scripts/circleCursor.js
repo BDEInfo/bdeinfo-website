@@ -18,7 +18,7 @@ document.onmousemove = (e) => {
 
     elementMouseIsOver = document.elementFromPoint(e.pageX, e.pageY)
 
-    if (elementMouseIsOver.classList.contains('circleHover')) {
+    if (elementMouseIsOver && elementMouseIsOver.classList.contains('circleHover')) {
         mouseCircle.style.transform = 'translate(-50%, -50%) scale(1.8)'
         mouseCircle.style.borderColor = secondaryColor
     }

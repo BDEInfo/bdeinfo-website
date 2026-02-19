@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mandats",
+  "info": {
+    "singularName": "mandat",
+    "pluralName": "mandats",
+    "displayName": "Mandat"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nom": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "annee": {
+      "type": "string",
+      "required": true
+    },
+    "adherants": {
+      "type": "component",
+      "component": "custom-types.adherants",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

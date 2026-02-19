@@ -22,20 +22,6 @@
     "endDate": {
       "type": "datetime"
     },
-    "distanciel": {
-      "type": "boolean",
-      "default": false
-    },
-    "prixAdh": {
-      "type": "decimal",
-      "default": 0,
-      "min": 0
-    },
-    "prixNAdh": {
-      "type": "decimal",
-      "default": 0,
-      "min": 0
-    },
     "tags": {
       "type": "enumeration",
       "enum": [
@@ -59,12 +45,20 @@
     "description": {
       "type": "richtext"
     },
-    "location": {
-      "type": "string"
+    "tarifs": {
+      "type": "component",
+      "component": "prix-evenement.tarif",
+      "repeatable": true
     },
-    "archived": {
-      "type": "boolean",
-      "default": false
+    "lieu": {
+      "type": "component",
+      "component": "lieu-evenement.lieu",
+      "repeatable": false
+    },
+    "liens": {
+      "type": "component",
+      "component": "utils.link",
+      "repeatable": true
     }
   }
 }

@@ -1,27 +1,13 @@
 .members
-
     display: flex
     flex-wrap: wrap
     justify-content: center
     align-items: center
+    padding: 0
+    list-style: none
 
-    .member
-
-        margin: 1rem
-
-        display: flex
+    @media (max-width: 768px)
         flex-direction: column
-        align-items: center
-
-        .image
-
-            height: 15vh
-            margin: .5rem
-            border-radius: 100px
-
-        .name
-
-        .role
-            
-            font-family: 'Poppins', sans-serif
-            font-weight: 500
+        align-items: stretch
+        padding: 0 1em
+        gap: 0.5em

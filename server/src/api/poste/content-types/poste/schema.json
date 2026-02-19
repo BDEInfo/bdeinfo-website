@@ -16,25 +16,28 @@
       "type": "string",
       "required": true
     },
-    "grade": {
-      "type": "enumeration",
-      "enum": [
-        "CM",
-        "RP",
-        "BD",
-        "BG",
-        "JD",
-        "JG",
-        "CD",
-        "CG"
-      ],
-      "required": false
+    "displayName": {
+      "type": "string",
+      "required": true,
+      "unique": false
     },
     "weight": {
       "type": "integer",
       "required": true,
       "min": 0,
       "max": 50
+    },
+    "color": {
+      "type": "customField",
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+      "required": false
+    },
+    "bde_members": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::bde-member.bde-member",
+      "inversedBy": "postes"
     }
   }
 }

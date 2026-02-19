@@ -4,5 +4,5 @@ export const tabs = [
     { displayName: 'Events', route: '/events' },
     { displayName: 'À propos', route: '/about' },
     { displayName: 'Utilitaires', route: '#', disabled: true },
-    { displayName: 'Contact', route: 'mailto:contact@bdeinfo.org' }
+    { displayName: 'Contact', route: '/contact' }
 ]

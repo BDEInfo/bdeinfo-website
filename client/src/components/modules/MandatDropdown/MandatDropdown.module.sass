@@ -1,0 +1,128 @@
+@use '_variables' as *
+@use '_mixins' as *
+@use 'sass:color'
+
+.dropdownWrapper
+    display: flex
+    flex-direction: column
+    gap: 0.5rem
+
+    .label
+        font-weight: 600
+        color: white
+        font-size: 1.2rem
+
+.dropdownContainer
+    position: relative
+    width: 100%
+
+    .dropdownTrigger
+        display: flex
+        align-items: center
+        gap: 0.75rem
+        padding: 0.5rem 1rem
+        border-radius: 8px
+        cursor: pointer
+        transition: background-color 0.2s ease
+        background-color: color.adjust($backgroundColor, $whiteness: 3%)
+
+        &:hover
+            background-color: color.adjust($backgroundColor, $whiteness: 5%)
+
+        .mandatLogo
+            width: 40px
+            height: 40px
+            border-radius: 50%
+            object-fit: cover
+
+            @include media-max($breakpoint-xs)
+                width: 30px
+                height: 30px
+
+        .mandatName
+            font-weight: 600
+            color: white
+
+        .mandatYear
+            color: color.adjust(white, $alpha: -0.4)
+            font-size: 0.9em
+
+        .badgeActuel
+            background-color: $secondaryColor
+            color: white
+            font-size: 0.7em
+            font-weight: 600
+            padding: 0.2em 0.5em
+            border-radius: 4px
+            text-transform: uppercase
+
+        .dropdownIcon
+            margin-left: auto
+            font-size: 0.8em
+            color: color.adjust(white, $alpha: -0.3)
+            transition: transform 0.2s ease
+
+    .dropdownMenu
+        position: absolute
+        top: calc(100% + 0.5rem)
+        left: 0
+        width: 100%
+        max-height: 300px
+        overflow-y: auto
+
+        background-color: color.adjust($backgroundColor, $whiteness: 4%)
+        border-radius: 8px
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3)
+        z-index: 100
+
+        .dropdownItem
+            display: flex
+            align-items: center
+            gap: 0.75rem
+            padding: 0.75rem 1rem
+            cursor: pointer
+            transition: background-color 0.15s ease
+
+            &:first-child
+                border-radius: 8px 8px 0 0
+
+            &:last-child
+                border-radius: 0 0 8px 8px
+
+            &:hover
+                background-color: color.adjust($backgroundColor, $whiteness: 8%)
+
+            &.active
+                background-color: color.adjust($backgroundColor, $whiteness: 6%)
+
+                .mandatName
+                    color: $secondaryColor
+
+            .mandatLogo
+                width: 35px
+                height: 35px
+                border-radius: 50%
+                object-fit: cover
+
+                @include media-max($breakpoint-xs)
+                    width: 28px
+                    height: 28px
+
+            .mandatName
+                font-weight: 500
+                color: white
+                font-size: 0.95em
+
+            .mandatYear
+                color: color.adjust(white, $alpha: -0.4)
+                font-size: 0.85em
+
+            .badgeActuel
+                background-color: $secondaryColor
+                color: white
+                font-size: 0.65em
+                font-weight: 600
+                padding: 0.2em 0.5em
+                border-radius: 4px
+                text-transform: uppercase
+                margin-left: auto

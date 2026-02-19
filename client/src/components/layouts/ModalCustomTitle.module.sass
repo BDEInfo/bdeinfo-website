@@ -1,0 +1,93 @@
+@use '_variables' as *
+@use '_mixins' as *
+@use 'sass:color'
+
+.modalOverlay
+
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+
+    display: flex
+    justify-content: center
+    align-items: center
+
+    backdrop-filter: blur(0)
+
+    animation: blur .2s linear forwards
+
+    @keyframes blur
+        0%
+            backdrop-filter: blur(0)
+        100%
+            backdrop-filter: blur(3px)
+
+    .modal
+
+        width: 50vw
+        height: 70vh
+
+        border-radius: 15px
+        padding: 2rem
+
+        background-color: color.adjust($backgroundColor, $whiteness: 2%)
+
+        display: flex
+        flex-direction: column
+        align-items: center
+
+        @include media-max($breakpoint-sm)
+            width: 80vw
+
+        .modalHeader
+
+            width: 100%
+
+            display: flex
+            justify-content: space-between
+            align-items: center
+
+            font-size: 1.5rem
+
+            @include media-max($breakpoint-xs)
+                font-size: 1rem
+
+            .title
+                font-weight: 600
+                color: white
+
+            i.fa-times
+                color: color.adjust(red, $alpha: -0.3)
+                font-size: 2.2rem
+
+                cursor: pointer
+                transition: .1s linear
+
+                &:hover
+                    color: red
+
+                @include media-max($breakpoint-xs)
+                    font-size: 1.5rem
+
+        .titleComponent
+            width: 100%
+            margin-top: 1rem
+
+        .separator
+
+            margin: 1rem
+            width: 100%
+            height: 2px
+
+            border-radius: 100px
+
+            background: rgba(255,255,255,.5)
+
+        .modalBody
+
+            padding-top: 10px
+            width: 100%
+
+            overflow-y: scroll

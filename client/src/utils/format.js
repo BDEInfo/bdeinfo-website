@@ -4,16 +4,16 @@ import React from 'react'
 export function formatDate (date) { return dateformat(date, 'dd/mm à HH:MM') }
 
 export function formatJSONResponse (object) {
-
-    object = object.data || object
+    object = object?.data || object
     if (Array.isArray(object)) {
         for (let i = 0; i < object.length; i++) {
             object[i] = formatJSONResponse(object[i])
         }
         return object
     } else {
-        for (const attribute of Object.keys(object.attributes)) {
-            if (object.attributes[attribute]?.data) 
+        if (!object || !object.attributes) return object
+        for (const attribute of Object.keys(object.attributes || {})) {
+            if (object.attributes[attribute]?.data)
                 object.attributes[attribute] = formatJSONResponse(object.attributes[attribute])
         }
         object.attributes.id = object.id
