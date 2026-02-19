@@ -14,7 +14,7 @@ export default function App ({ links, events }) {
 
 export async function getStaticProps () {
 
-    const [links, events] = await Promise.all([
+    const [linksResult, eventsResult] = await Promise.allSettled([
         strapi.single('link').find(),
         strapi.collection('events').find({
             populate: ['image', 'tarifs', 'lieu', 'liens'],
@@ -23,11 +23,14 @@ export async function getStaticProps () {
         })
     ])
 
+    const links = linksResult.status === 'fulfilled' ? linksResult.value.data : {}
+    const events = eventsResult.status === 'fulfilled' ? eventsResult.value.data : []
+
     return {
         props: {
-            links: links.data,
-            events: events.data
+            links,
+            events
         },
-        revalidate: 20
+        revalidate: 120
     }
 }

@@ -12,18 +12,22 @@ export default function App ({ links, contactInfo, bdeInfo }) {
 }
 
 export async function getStaticProps () {
-    const [links, contactInfo, bdeInfo] = await Promise.all([
+    const [linksResult, contactInfoResult, bdeInfoResult] = await Promise.allSettled([
         strapi.single('link').find(),
         strapi.collection('contact-informations').find(),
         strapi.single('bde-information').find()
     ])
 
+    const links = linksResult.status === 'fulfilled' ? linksResult.value.data : {}
+    const contactInfo = contactInfoResult.status === 'fulfilled' ? contactInfoResult.value.data : []
+    const bdeInfo = bdeInfoResult.status === 'fulfilled' ? bdeInfoResult.value.data : {}
+
     return {
         props: {
-            links: links.data,
-            contactInfo: contactInfo.data,
-            bdeInfo: bdeInfo.data,
+            links,
+            contactInfo,
+            bdeInfo,
         },
-        revalidate: 20
+        revalidate: 120
     }
 }

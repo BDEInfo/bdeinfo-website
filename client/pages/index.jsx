@@ -11,9 +11,9 @@ export default function App ({ links, homePage, events }) {
     </>)
 }
 
-export async function getServerSideProps (ctx) {
+export async function getStaticProps () {
 
-    const [links, homePage, events] = await Promise.all([
+    const [linksResult, homePageResult, eventsResult] = await Promise.allSettled([
         strapi.single('link').find(),
         strapi.single('home-page').find(),
         strapi.collection('events').find({
@@ -22,11 +22,16 @@ export async function getServerSideProps (ctx) {
         })
     ])
 
+    const links = linksResult.status === 'fulfilled' ? linksResult.value.data : {}
+    const homePage = homePageResult.status === 'fulfilled' ? homePageResult.value.data : {}
+    const events = eventsResult.status === 'fulfilled' ? eventsResult.value.data : []
+
     return {
         props: {
-            links: links.data,
-            homePage: homePage.data,
-            events: events.data
-        }
+            links,
+            homePage,
+            events
+        },
+        revalidate: 120
     }
 }

@@ -42,6 +42,7 @@ export default function About ({ bdeInformations, bdeMembers, adherents, adheren
 
     const cards = useMemo(() => bdeInformations?.cards || [], [bdeInformations])
     const descriptionShort = bdeInformations?.description_short || ''
+    const statutsUrl = bdeInformations?.statuts?.url
 
     const logoValue = bdeInformations?.logo
     const logoIsIcon = isFontAwesomeClass(logoValue)
@@ -66,9 +67,11 @@ export default function About ({ bdeInformations, bdeMembers, adherents, adheren
                         <button className={styles.secondaryAction} onClick={() => setAdherentsModal(true)}>
                             Voir les adhérents
                         </button>
-                        <a className={styles.ghostAction} href={`${apiURL}${bdeInformations.statuts.url}`} target="_blank" rel="noreferrer">
-                            Statuts du BDE
-                        </a>
+                        {statutsUrl && (
+                            <a className={styles.ghostAction} href={`${apiURL}${statutsUrl}`} target="_blank" rel="noreferrer">
+                                Statuts du BDE
+                            </a>
+                        )}
                     </div>
                 </div>
 

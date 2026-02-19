@@ -3,4 +3,6 @@ const apiURL = {
     production: 'https://strapi.bdeinfo.org' // docker -> http://bdeinfo-server:1337
 }
 
-export default apiURL[process.env.NODE_ENV]
+const envApiURL = process.env.API_URL
+
+export default envApiURL || apiURL[process.env.NODE_ENV] || apiURL.production

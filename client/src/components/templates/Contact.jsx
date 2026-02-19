@@ -2,7 +2,7 @@ import styles from './Contact.module.sass'
 import apiURL from '@config/connection'
 import { useState } from 'react'
 
-export default function Contact ({ contactInfo, bdeInfo }) {
+export default function Contact ({ contactInfo = [], bdeInfo = {} }) {
     const [formData, setFormData] = useState({
         name: '',
         mail: '',
@@ -72,17 +72,19 @@ export default function Contact ({ contactInfo, bdeInfo }) {
                     </h2>
 
                     <div className={styles.bdeInfo}>
-                        <div className={styles.infoItem}>
-                            <i className="fas fa-envelope"></i>
-                            <a href={`mailto:${bdeInfo.email}`}>{bdeInfo.email}</a>
-                            <button
-                                className={`${styles.copyBtn} ${copiedItem === 'bde-email' ? styles.copied : ''}`}
-                                onClick={() => handleCopy(bdeInfo.email, 'bde-email')}
-                                title="Copier l'email"
-                            >
-                                <i className={copiedItem === 'bde-email' ? 'fas fa-check' : 'fas fa-copy'}></i>
-                            </button>
-                        </div>
+                        {bdeInfo.email && (
+                            <div className={styles.infoItem}>
+                                <i className="fas fa-envelope"></i>
+                                <a href={`mailto:${bdeInfo.email}`}>{bdeInfo.email}</a>
+                                <button
+                                    className={`${styles.copyBtn} ${copiedItem === 'bde-email' ? styles.copied : ''}`}
+                                    onClick={() => handleCopy(bdeInfo.email, 'bde-email')}
+                                    title="Copier l'email"
+                                >
+                                    <i className={copiedItem === 'bde-email' ? 'fas fa-check' : 'fas fa-copy'}></i>
+                                </button>
+                            </div>
+                        )}
                         {bdeInfo.phone && (
                             <div className={styles.infoItem}>
                                 <i className="fas fa-phone"></i>
