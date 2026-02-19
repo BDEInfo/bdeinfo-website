@@ -100,7 +100,7 @@ jobs:
     permissions:
       contents: read
       packages: read
-    environment: production
+    environment: main
     steps:
       - name: Deploy over SSH using Docker CLI
         uses: appleboy/ssh-action@v1.2.0
