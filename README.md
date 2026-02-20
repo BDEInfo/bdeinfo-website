@@ -77,3 +77,4 @@ client
 Voici la liste des personnes ayant contribuées au projet. Si tu es un nouveau mainteneur, n'hésite pas à les contacter pour leur poser des questions sur le code ou autre !
 
 - [Bartholomé GILI](https://www.github.com/barthofu) (auteur) - *2021/2022*
+- [Emilien C.](https://github.com/Emilcha) (mainteneur) - *depuis 2025*
