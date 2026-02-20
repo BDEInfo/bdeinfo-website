@@ -14,8 +14,8 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  CLIENT_IMAGE_NAME: ${{ github.repository_owner }}/bdeinfo-website-client
-  SERVER_IMAGE_NAME: ${{ github.repository_owner }}/bdeinfo-website-server
+  CLIENT_IMAGE_NAME: bdeinfo/bdeinfo-website-client
+  SERVER_IMAGE_NAME: bdeinfo/bdeinfo-website-server
 
 jobs:
   test:
