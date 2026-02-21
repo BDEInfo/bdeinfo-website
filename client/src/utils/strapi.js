@@ -1,8 +1,9 @@
 import { strapi } from '@strapi/client'
-import baseURL from '@config/connection'
+import { internalURL } from '@config/connection'
 
 const client = strapi({
-    baseURL: baseURL + '/api'
+    baseURL: internalURL + '/api',
+    auth: process.env.STRAPI_API_TOKEN
 })
 
 export default client

@@ -1,4 +1,4 @@
-const { GoogleSpreadsheet } = require('google-spreadsheet')
+import { GoogleSpreadsheet } from 'google-spreadsheet'
 
 // Cache pour éviter de récupérer les données trop souvent
 let adherentsCache = {}

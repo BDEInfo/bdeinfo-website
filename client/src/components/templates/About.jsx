@@ -5,7 +5,7 @@ import BDEMembers from '@module/BDEMembers/BDEMembers'
 import MandatDropdown from '@module/MandatDropdown/MandatDropdown'
 
 import { getImage } from '@util/image'
-import apiURL from '@config/connection'
+import { publicURL } from '@config/connection'
 
 import { useState, useEffect, useMemo } from 'react'
 
@@ -68,7 +68,7 @@ export default function About ({ bdeInformations, bdeMembers, adherents, adheren
                             Voir les adhérents
                         </button>
                         {statutsUrl && (
-                            <a className={styles.ghostAction} href={`${apiURL}${statutsUrl}`} target="_blank" rel="noreferrer">
+                            <a className={styles.ghostAction} href={`${publicURL}${statutsUrl}`} target="_blank" rel="noreferrer">
                                 Statuts du BDE
                             </a>
                         )}

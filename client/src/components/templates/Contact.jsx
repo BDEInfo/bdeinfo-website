@@ -1,5 +1,5 @@
 import styles from './Contact.module.sass'
-import apiURL from '@config/connection'
+import { publicURL } from '@config/connection'
 import { useState } from 'react'
 
 export default function Contact ({ contactInfo = [], bdeInfo = {} }) {
@@ -34,7 +34,7 @@ export default function Contact ({ contactInfo = [], bdeInfo = {} }) {
         setStatus({ type: '', message: '' })
 
         try {
-            const response = await fetch(`${apiURL}/api/contact-messages`, {
+            const response = await fetch(`${publicURL}/api/contact-messages`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

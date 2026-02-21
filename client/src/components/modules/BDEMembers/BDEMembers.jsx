@@ -9,7 +9,7 @@ function getHighestWeightedPoste (bdeMember) {
     }, bdeMember.postes[0]);
 }
 
-const sortBDEMembers = (bdeMembers) => bdeMembers.sort((a, b) => {
+const sortBDEMembers = (bdeMembers) => [...bdeMembers].sort((a, b) => {
     const posteA = getHighestWeightedPoste(a);
     const posteB = getHighestWeightedPoste(b);
     const weightA = posteA ? posteA.weight : 0;

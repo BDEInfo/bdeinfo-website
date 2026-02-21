@@ -2,7 +2,7 @@ import Default from "@layout/Default";
 import Contact from "@template/Contact";
 import strapi from "@util/strapi";
 
-export default function App ({ links, contactInfo, bdeInfo }) {
+export default function ContactPage ({ links, contactInfo, bdeInfo }) {
 
     return (<>
         <Default links={links}>

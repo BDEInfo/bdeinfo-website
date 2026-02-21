@@ -11,6 +11,8 @@ services:
     environment:
       NODE_ENV: production
       API_URL: http://bdeinfo-server:1337
+      NEXT_PUBLIC_API_URL: https://strapi.bdeinfo.org
+      STRAPI_API_TOKEN: ${STRAPI_API_TOKEN:?STRAPI_API_TOKEN is required}
       GOOGLE_SERVICE_ACCOUNT_EMAIL: ${GOOGLE_SERVICE_ACCOUNT_EMAIL:-}
       GOOGLE_PRIVATE_KEY: ${GOOGLE_PRIVATE_KEY:-}
     labels:

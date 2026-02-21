@@ -18,8 +18,8 @@ export default function Adherents ({ adherents }) {
         <div className={styles.count}>Total : <span>{ adherents.length }</span></div>
         <ul className={styles.adherents}>
         { adherents.map((adherent, index) => {
-            // Utiliser le lien de l'adhérent s'il existe, sinon un troll URL aléatoire
-            const link = adherent.link || trollUrls[Math.floor(Math.random() * trollUrls.length)]
+            // Utiliser le lien de l'adhérent s'il existe, sinon un troll URL déterministe (évite les erreurs d'hydratation)
+            const link = adherent.link || trollUrls[index % trollUrls.length]
 
             return (
                 <a key={index} href={link} target="_blank" rel="noopener noreferrer">

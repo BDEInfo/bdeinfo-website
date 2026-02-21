@@ -2,7 +2,7 @@ import HomePage from '@template/HomePage'
 import Default from '@layout/Default'
 import strapi from '@util/strapi'
 
-export default function App ({ links, homePage, events }) {
+export default function Home ({ links, homePage, events }) {
     
     return (<>
         <Default links={links}>
