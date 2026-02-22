@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styles from './HomePage.module.sass'
 
 import useInterval from '@hook/useInterval'
@@ -9,13 +9,14 @@ import { getImage } from '@util/image'
 export default function HomePage ({ homePage, events }) {
 
     const [radioChecked, setRadioChecked] = useState(1)
+    const delay = homePage?.carouselDelayInSeconds
 
     useInterval(() => {
 
         if (radioChecked === 3) setRadioChecked(1)
         else setRadioChecked(radioChecked + 1)
 
-    }, homePage.carouselDelayInSeconds * 1000)
+    }, delay ? delay * 1000 : null)
 
     return (<>
         <div className={styles.mainText}>
@@ -31,9 +32,9 @@ export default function HomePage ({ homePage, events }) {
         </div>
 
         <div className={styles.eventsContainer}>
-            <input className={styles.radio} type="radio" name="slider" id={styles['radio-1']} defaultChecked={radioChecked === 1}/>
-            <input className={styles.radio} type="radio" name="slider" id={styles['radio-2']} defaultChecked={radioChecked === 2}/>
-            <input className={styles.radio} type="radio" name="slider" id={styles['radio-3']} defaultChecked={radioChecked === 3}/>
+            <input className={styles.radio} type="radio" name="slider" id={styles['radio-1']} checked={radioChecked === 1} readOnly/>
+            <input className={styles.radio} type="radio" name="slider" id={styles['radio-2']} checked={radioChecked === 2} readOnly/>
+            <input className={styles.radio} type="radio" name="slider" id={styles['radio-3']} checked={radioChecked === 3} readOnly/>
 
             <div className={styles.events}>
                 {events.map((event, i) => 

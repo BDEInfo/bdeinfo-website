@@ -3,7 +3,7 @@ import Default from '@layout/Default'
 
 import strapi from '@util/strapi'
 
-export default function App ({ links, events }) {
+export default function EventsPage ({ links, events }) {
 
     return (<>
         <Default links={links}>

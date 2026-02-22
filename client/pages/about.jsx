@@ -4,7 +4,7 @@ import Default from '@layout/Default'
 import strapi from '@util/strapi'
 import { fetchAdherents } from '@util/adherents'
 
-export default function App ({ links, bdeInformations, bdeMembers, adherents, adherentsConfig, mandats }) {
+export default function AboutPage ({ links, bdeInformations, bdeMembers, adherents, adherentsConfig, mandats }) {
 
     return (<>
         <Default links={links}>

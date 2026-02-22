@@ -15,6 +15,8 @@ services:
     environment:
       NODE_ENV: development
       API_URL: http://bdeinfo-server:1337
+      NEXT_PUBLIC_API_URL: http://localhost:1337
+      STRAPI_API_TOKEN: ${STRAPI_API_TOKEN:-}
 
   bdeinfo-server:
     container_name: bdeinfo-server
